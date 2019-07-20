@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "es6",
     "outDir": "./build",
     "sourceMap": true,

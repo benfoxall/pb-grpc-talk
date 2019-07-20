@@ -1,4 +1,4 @@
-import { PeerServer } from './peer.js'
+import { PeerRPCServer, Handler } from './peerRPC'
 
 export default (room) => {
   const main = document.querySelector('main')
@@ -10,10 +10,13 @@ export default (room) => {
     )
   )
 
-  const server = new PeerServer(room)
-  
-  server.on("data", (id, data) => {
-    console.log("GOT DATA", id, data)
-  });
 
+  const handler: Handler = (meta, data) => {
+    console.log("HANDLE")
+    console.log(meta, data)
+
+    return new Uint8Array([data[0] + data[1]])
+  }
+
+  new PeerRPCServer(room, handler)
 }

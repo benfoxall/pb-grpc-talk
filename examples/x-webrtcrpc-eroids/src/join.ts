@@ -1,4 +1,5 @@
-import { PeerClient } from './peer.js'
+
+import { PeerRPCClient } from './peerRPC';
 
 export default async (room) => {
   const main = document.querySelector('main')
@@ -10,10 +11,15 @@ export default async (room) => {
     )
   )
 
-  const client = new PeerClient(room)
+  const client = new PeerRPCClient(room)
 
   window.addEventListener('mousemove', (e) => {
     const {screenX, screenY} = e
-    client.send(new Uint8Array([screenX, screenY]))
+
+    client.call("coords", new Uint8Array([screenX, screenY]))
+      .then(d => {
+        console.log("HELLO", d)
+      })
+
   })
 }

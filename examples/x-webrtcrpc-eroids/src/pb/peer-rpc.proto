@@ -1,0 +1,12 @@
+
+// Ignore this!!
+
+syntax = 'proto3';
+
+message RPCWrapper {
+  string peerId = 1;
+  string fnName = 2;
+  int32 requestId = 3;
+
+  bytes payload = 4;
+}

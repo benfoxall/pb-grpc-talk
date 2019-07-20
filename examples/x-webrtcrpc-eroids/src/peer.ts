@@ -1,21 +1,31 @@
-import signalhub from "./vendor/signalhub.js"
-import Peer from './vendor/simplepeer.js'
+
+import signalhub from 'signalhub'
+import Peer from 'simple-peer'
+
+// console.log(PeerMessage);
+
+// const m = new PeerMessage();
 
 // signalhub config
 const url = "https://signalhub-jccqtwhdwc.now.sh"
 const app = 'webrtcrpc-eroids'
 
+type Listener = (id: string, payload: Uint8Array) => void;
+
+// Messages in the main hub room
+type HubMessage = 
+  { ping: string} &
+  { pong: string} & 
+  { id: string, data: any }
+
 export class PeerServer {
 
-  private room: any;
-  private listeners: any;
+  private listeners: Set<Listener>;
   private peers: any;
-  private sub: any;
 
-  constructor (room) {
-    this.room = room
+  constructor (room: string) {
     this.listeners = new Set
-    const peers = this.peers = new Map
+    this.peers = new Map
 
     const hostID = Math.random().toString(32);
 
@@ -27,13 +37,13 @@ export class PeerServer {
     }, 100)
     
 
-    this.sub = hub.subscribe(room)
+    const sub = hub.subscribe(room)
 
-    this.sub
+    sub
       .on('open', () => {
         console.log("open…")
       })
-      .on('data', (message) => {
+      .on('data', (message: HubMessage) => {
         console.log("GOT", message)
 
         if(message.ping) {
@@ -60,7 +70,7 @@ export class PeerServer {
         const remoteId = message.id;
         const json = message.data;
 
-        if(!peers.has(remoteId)) {
+        if(!this.peers.has(remoteId)) {
           const peer = new Peer({ initiator: false })
           peer.on('error', err => console.log('error', err))
 
@@ -76,27 +86,28 @@ export class PeerServer {
           })
 
           peer.on('data', data => {
+
             this.listeners.forEach(fn => {
               fn(remoteId, data);
             })
           })
 
-          peers.set(remoteId, peer);
+          this.peers.set(remoteId, peer);
         }
 
-        peers.get(remoteId).signal(json);
+        this.peers.get(remoteId).signal(json);
       })
   
 
   }
 
-  on(name, fn) {
+  on(name: string, fn: Listener) {
     if(name === 'data') {
       this.listeners.add(fn)
     }
   }
 
-  send(id, payload) {
+  send(id: string, payload: Uint8Array) {
     if(this.peers.has(id)) {
       this.peers.get(id).send(payload)
     }
@@ -107,9 +118,10 @@ export class PeerServer {
 
 export class PeerClient {
 
+  private listeners = new Set<(d: Uint8Array) => void>();
   private peer: any;
 
-  constructor(room) {
+  constructor(room: string) {
 
     const connect = async (room) => {
 
@@ -133,12 +145,16 @@ export class PeerClient {
     
       peer.on('error', err => console.log('error', err))
     
-      peer.on('signal', data =>  hub.broadcast(room, { id, data }))
+      peer.on('signal', data =>  hub.broadcast(room, { id, data } as HubMessage))
       subscription.on('data', d => peer.signal(d));
     
       await new Promise(resolve => peer.on("connect", resolve))
     
       hub.close();
+
+      peer.on('data', (data) => {
+        this.listeners.forEach(fn => fn(data))
+      })
     
       return peer;
     }
@@ -152,7 +168,13 @@ export class PeerClient {
     */
   }
 
-  send(payload) {
+  send(payload: Uint8Array) {
     this.peer.then(p => p.send(payload))
+  }
+
+  on(name: string, fn: (d: Uint8Array) => void) {
+    if(name === 'data') {
+      this.listeners.add(fn)
+    }
   }
 }

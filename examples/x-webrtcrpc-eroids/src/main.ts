@@ -1,5 +1,5 @@
-import host from "./host.js";
-import join from "./join.js"
+import host from "./host";
+import join from "./join"
 
 const params = new URLSearchParams(document.location.search)
 

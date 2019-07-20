@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message Example {
+    string name = 1;
+    boolean checked = 2;
+    repeated string values = 3;
+    
+    enum {
+        foo: 1
+        baz: 
+    } = 4;
+}

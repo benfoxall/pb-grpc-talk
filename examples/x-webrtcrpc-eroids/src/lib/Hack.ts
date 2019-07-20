@@ -1,51 +1,79 @@
 
-import {DemoService} from './pb/gen/ts/peer-rpc_pb_service'
-import { MathsRequest, MathsResponse, RPCWrapper } from './pb/gen/ts/peer-rpc_pb';
+import {Calculator} from './pb/gen/ts/calculator_pb_service'
+
+type FilterFlags<Base, Condition> = {
+  [Key in keyof Base]: 
+      Base[Key] extends Condition ? Key : never
+};
+type AllowedNames<Base, Condition> = 
+      FilterFlags<Base, Condition>[keyof Base];
+
+type SubType<Base, Condition> = 
+      Pick<Base, AllowedNames<Base, Condition>>;
+
 
 type Service = {
   readonly requestType: any;
   readonly responseType: any;
 }
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-
-// type ServiceImpl = Omit<typeof DemoService, "serviceName" | "prototype">;
-
-type ServiceImpl = Omit<typeof DemoService, "serviceName" | "prototype">;
-
-// type xxx = Exclude<typeof DemoService>;
-
-
-type ServiceImpl2 = {
-  readonly [P in keyof ServiceImpl]: 
-    (
-      request: InstanceType<ServiceImpl[P]["requestType"]>,
-      response: InstanceType<ServiceImpl[P]["responseType"]>
-    ) => void | Promise<void>
+type Implementation<S> = {
+  readonly [P in keyof S]?: 
+    S[P] extends Service ? (
+      request: InstanceType<S[P]["requestType"]>,
+      response: InstanceType<S[P]["responseType"]>
+    ) => void | Promise<void> : never;
 }
 
-/*
-readonly requestType: typeof peer_rpc_pb.RPCWrapper;
-readonly responseType: typeof peer_rpc_pb.RPCWrapper;
-*/
+/** Gives the methods of a service */
+type Methods<S> = {
+  [P in keyof SubType<S, Service>]: {
+    request: S[P] extends Service ? InstanceType<S[P]["requestType"]> : never;
+    response: S[P] extends Service ? InstanceType<S[P]["responseType"]> : never;
+  }
+}
+
+// type testing = Methods<typeof DemoService>
+
+class HackServer<S> {
+  constructor(service: S, impl: Implementation<S>) {}
+
+  listen(room: string) {}
+}
+
+class HackClient<S> {
+
+  constructor(service: S, room: string) {
+
+  }
+
+  call<T extends keyof Methods<S>>(name: T,  setter: (p: Methods<S>[T]['request']) => void | Promise<void>): Promise<Methods<S>[T]['response']> {
+
+    console.log("calling", name);
+
+    return Promise.reject(null);
+  }
+}
 
 
-const implementation: ServiceImpl2 = {
+const client = new HackClient(Calculator, "1234");
+
+client
+  .call("Add", (request) => {
+    request.setNumber1(12)
+    request.setNumber1(22)
+  })
+  .then(r => {
+    r.getAnswer()
+  })
+
+const server = new HackServer(Calculator, {
   Add: (request, response) => {
-    const total = request.getNumber1() + request.getNumber2();
-    
-    response.setAnswer(total);
-  },
-
-  OtherThing: (request, response) => {
+    response.setAnswer(
+      request.getNumber1() + 
+      request.getNumber2()
+    )
   }
-}
+});
 
-class HackBackend {
-  constructor(room: string, impl) {
-
-  }
-}
-
-
-const test = new HackBackend("234", implementation);
+server.listen("234")

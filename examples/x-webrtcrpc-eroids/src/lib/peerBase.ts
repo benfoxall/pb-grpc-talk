@@ -1,10 +1,6 @@
 
 import signalhub from 'signalhub'
-import Peer from 'simple-peer'
-
-// console.log(PeerMessage);
-
-// const m = new PeerMessage();
+import Peer = require('simple-peer');
 
 // signalhub config
 const url = "https://signalhub-jccqtwhdwc.now.sh"

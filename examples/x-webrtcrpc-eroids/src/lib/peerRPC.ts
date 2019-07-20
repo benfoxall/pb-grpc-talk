@@ -1,5 +1,5 @@
-import {PeerServer, PeerClient} from './peer'
-import {RPCWrapper} from './pb/peer-rpc_pb';
+import {PeerServer, PeerClient} from './peerBase'
+import {RPCWrapper} from './pb/gen/ts/peer-rpc_pb'
 
 
 type Meta = {fnName: string; peerId: string;}
@@ -24,7 +24,6 @@ export class PeerRPCServer extends PeerServer {
         .then(data => {
           request.setPayload(data);
           super.send(id, request.serializeBinary());
-
         })
       
     })
@@ -58,7 +57,7 @@ export class PeerRPCClient extends PeerClient {
     })
   }
 
-  call(fnName: string, payload: Uint8Array) {
+  call(fnName: string, payload: Uint8Array): Promise<Uint8Array> {
 
     const requestId = this.requestCount++
 

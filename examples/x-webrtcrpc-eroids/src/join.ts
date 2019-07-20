@@ -1,5 +1,6 @@
 
-import { PeerRPCClient } from './peerRPC';
+import { PeerServiceClient } from './lib/peerService';
+import { Demo } from './lib/pb/gen/ts/demo_pb_service';
 
 export default async (room) => {
   const main = document.querySelector('main')
@@ -11,15 +12,27 @@ export default async (room) => {
     )
   )
 
-  const client = new PeerRPCClient(room)
+  const input = document.createElement('input');
+  input.type = 'color'
+  main.appendChild(input)
+
+  const client = new PeerServiceClient(room, Demo);
+
+
+  input.addEventListener('change', () => {
+    client.issue("Background", (request) => {
+      request.setValue(input.value)
+    })
+  })
 
   window.addEventListener('mousemove', (e) => {
-    const {screenX, screenY} = e
 
-    client.call("coords", new Uint8Array([screenX, screenY]))
-      .then(d => {
-        console.log("HELLO", d)
-      })
+    client.issue("MouseMove", (request) => {
+      request.setLeft(e.clientX)
+      request.setTop(e.clientY)
+    }).then(response => {
+      console.log(response.getAnswer())
+    })
 
   })
 }

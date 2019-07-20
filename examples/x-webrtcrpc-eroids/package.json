@@ -12,9 +12,11 @@
     "typescript": "^3.5.3"
   },
   "devDependencies": {
+    "@improbable-eng/grpc-web": "^0.9.6",
     "@types/google-protobuf": "^3.7.1",
     "@types/simple-peer": "^6.1.6",
-    "google-protobuf": "^3.9.0"
+    "google-protobuf": "^3.9.0",
+    "grpc-web": "^1.0.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,16 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "es6",
-    "outDir": "./build",
-    "sourceMap": true,
-    "allowJs": true
+    // "moduleResolution": "classic"
   },
   "include": [
-      "src/**/*"
+    "src/**/*"
   ],
-  "exclude": [
-      "node_modules",
-      "**/*.spec.ts"
-  ]
 }

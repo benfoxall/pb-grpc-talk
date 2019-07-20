@@ -7,6 +7,11 @@ const app = 'webrtcrpc-eroids'
 
 export class PeerServer {
 
+  private room: any;
+  private listeners: any;
+  private peers: any;
+  private sub: any;
+
   constructor (room) {
     this.room = room
     this.listeners = new Set
@@ -101,6 +106,9 @@ export class PeerServer {
 
 
 export class PeerClient {
+
+  private peer: any;
+
   constructor(room) {
 
     const connect = async (room) => {

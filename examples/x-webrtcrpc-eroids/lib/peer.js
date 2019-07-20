@@ -1,6 +1,9 @@
 import signalhub from "./vendor/signalhub.js"
 import Peer from './vendor/simplepeer.js'
 
+// signalhub config
+const url = "https://signalhub-jccqtwhdwc.now.sh"
+const app = 'webrtcrpc-eroids'
 
 export class PeerServer {
 
@@ -9,7 +12,15 @@ export class PeerServer {
     this.listeners = new Set
     const peers = this.peers = new Map
 
-    var hub = signalhub('webrtcrpc-eroids', "https://signalhub-jccqtwhdwc.now.sh")
+    const hostID = Math.random().toString(32);
+
+    var hub = signalhub(app, url)
+
+    const started = performance.now();
+    setTimeout(() => {
+      hub.broadcast(room, {ping: hostID})
+    }, 100)
+    
 
     this.sub = hub.subscribe(room)
 
@@ -19,6 +30,27 @@ export class PeerServer {
       })
       .on('data', (message) => {
         console.log("GOT", message)
+
+        if(message.ping) {
+
+          if(message.ping !== hostID) {
+            hub.broadcast(room, {pong: message.ping});
+          }
+
+          return;
+        }
+
+        if(message.pong) {
+          // if matches me AND I'm new, then remove
+          const delta = performance.now() - started;
+
+          if(message.pong === hostID && delta < 5000) {
+            console.log("ooops, disconneting")
+
+            hub.close()
+          } 
+          return;
+        }
 
         const remoteId = message.id;
         const json = message.data;
@@ -81,7 +113,7 @@ export class PeerClient {
       // the ID of this peer
       const id = Math.random().toString(32)
     
-      const hub = signalhub('webrtcrpc-eroids', "https://signalhub-jccqtwhdwc.now.sh")
+      const hub = signalhub(app, url)
     
       const subscription = hub.subscribe(id) 
     

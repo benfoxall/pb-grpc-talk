@@ -26,7 +26,6 @@ export default async (room) => {
   })
 
   window.addEventListener('mousemove', (e) => {
-
     client.issue("MouseMove", (request) => {
       request.setLeft(e.clientX)
       request.setTop(e.clientY)

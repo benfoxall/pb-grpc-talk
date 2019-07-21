@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "rollup-plugin-node-resolve": "^5.2.0",
+    "expr-eval": "^1.2.3",
     "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "signalhub": "^4.9.0",
     "simple-peer": "^9.4.0",
     "src": "^1.1.2",

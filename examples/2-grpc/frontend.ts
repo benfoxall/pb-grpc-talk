@@ -1,6 +1,6 @@
 import {html, render} from 'lit-html';
-import { ZoomClient } from "./protos/dist/ts/ZoomServiceClientPb"
-import { ColorSchemeRequest, Noop, EchoMessage } from './protos/dist/ts/zoom_pb';
+import { ZoomClient } from "./protos/generated/ZoomServiceClientPb"
+import { ColorSchemeRequest, Noop, EchoMessage } from './protos/generated/zoom_pb';
 
 var zoomClient = new ZoomClient('/api');
 

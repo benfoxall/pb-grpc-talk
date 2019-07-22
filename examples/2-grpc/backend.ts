@@ -1,8 +1,8 @@
 
 import { toggle } from 'dark-mode';
 import { Server, ServerCredentials } from 'grpc';
-import { ZoomService, IZoomServer } from './protos/dist/ts/zoom_grpc_pb'
-import { Noop, ColorSchemeRequest, SystemInfo, Image } from './protos/dist/ts/zoom_pb'
+import { ZoomService, IZoomServer } from './protos/generated/zoom_grpc_pb'
+import { Noop, ColorSchemeRequest, SystemInfo, Image } from './protos/generated/zoom_pb'
 import { currentLoad, battery } from 'systeminformation';
 import * as osxScreenshot from 'screenshot-desktop';
 
@@ -15,7 +15,7 @@ const zoomHandlers: IZoomServer = {
   echo: ({request}, callback) => {
     
     request.setText(
-      request.getText().toLocaleUpperCase()
+      request.getText().toLocaleUpperCase() + '!!1!!one!'
     )
 
     callback(null, request)

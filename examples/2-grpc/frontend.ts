@@ -1,35 +1,44 @@
 import {html, render} from 'lit-html';
 import { ZoomClient } from "./protos/dist/ts/ZoomServiceClientPb"
-import { ColorSchemeRequest, Noop } from './protos/dist/ts/zoom_pb';
+import { ColorSchemeRequest, Noop, EchoMessage } from './protos/dist/ts/zoom_pb';
 
 var zoomClient = new ZoomClient('/api');
 
 const {DARK, LIGHT} = ColorSchemeRequest.Scheme;
 
-zoomClient.getSystemInfo(new Noop())
+zoomClient.systemInfo(new Noop())
   .on('data', (s) => {
-    console.log("--s", s);
-
     document.querySelector('#zoom').innerHTML = JSON.stringify(s.toObject(), null, 2)
   })
 
 
 zoomClient.screenShot(new Noop(), {}, (err, response) => {
+  if(err) throw err;
 
-  const file = new Blob([response.getFile_asU8()], {
-    type: 'image/jpg'
-  })
-const url = URL.createObjectURL(file)
+  const url = URL.createObjectURL(
+    new Blob([response.getBytes_asU8()],  { type: response.getType() }
+  ))
 
-console.log(url)
-
-  response.getFile_asB64();
-
+  const im = document.createElement('img');
+  im.src = url;
+  document.body.appendChild(im)
 
 })
 
 
 class Fn {
+
+  echo(text: string): Promise<string> {
+    const message = new EchoMessage();
+    message.setText(text)
+
+    return new Promise(resolve => 
+      zoomClient.echo(message, {}, (err, response) => {
+        if(err) throw err;
+        resolve(response.getText())
+      })
+    )
+  }
 
   dark() {
     const request = new ColorSchemeRequest()

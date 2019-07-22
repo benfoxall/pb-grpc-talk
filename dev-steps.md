@@ -30,6 +30,8 @@ npm install grpc_tools_node_protoc_ts --global
 
 grpcwebproxy \
     --backend_addr=localhost:9090 \
-    --run_tls_server=false
+    --run_tls_server=false \
+    --server_http_max_write_timeout=1h \
+    --allow_all_origins
 
 ```

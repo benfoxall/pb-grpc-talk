@@ -2,9 +2,12 @@
   <head>
     <style>
       body { font-family: sans-serif; transition: .5s }
+
       @media (prefers-color-scheme: dark) {
         body {background: #333; color: #fff}
       }
+
+      img { max-width: 100%; }
     </style>
   </head>
   <body>
@@ -12,8 +15,7 @@
       <legend>Zoom</legend>
 
       <meter>cp1</meter>
-      <div id="zoom"></div>
-      
+      <pre id="zoom"></pre>
     </fieldset>
 
     <script src="./frontend.ts"></script>

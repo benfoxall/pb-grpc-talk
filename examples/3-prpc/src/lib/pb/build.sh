@@ -1,5 +1,6 @@
 
-TS_PROTOC=`which protoc-gen-ts`
+# So weird - ts-protoc-gen & grpc_tools_node_protoc_ts output same bin
+TS_PROTOC=../../../../../node_modules/ts-protoc-gen/bin/protoc-gen-ts
 
 INPUT=*.proto
 OUT=gen

@@ -25,9 +25,11 @@
     "express": "^4.17.1",
     "google-protobuf": "^3.9.0",
     "grpc-web": "^1.0.5",
+    "grpc_tools_node_protoc_ts": "^2.5.4",
     "http-proxy-middleware": "^0.19.1",
     "nodemon": "^1.19.1",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "ts-protoc-gen": "^0.10.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,5 +1,6 @@
 import { PeerServiceServer } from './lib/peerService';
 import { Demo } from './lib/pb/gen/ts/demo_pb_service';
+// import { Demo } from './lib/pb/gen/ts/';
 
 export default (room: string) => {
   const main = document.querySelector('main')

@@ -1,31 +1,31 @@
 // package: 
-// file: demo.proto
+// file: dev.proto
 
-import * as demo_pb from "./demo_pb";
+import * as dev_pb from "./dev_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type DemoMouseMove = {
+type DevMouseMove = {
   readonly methodName: string;
-  readonly service: typeof Demo;
+  readonly service: typeof Dev;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof demo_pb.MoveEvent;
-  readonly responseType: typeof demo_pb.MoveResponse;
+  readonly requestType: typeof dev_pb.MoveEvent;
+  readonly responseType: typeof dev_pb.MoveResponse;
 };
 
-type DemoBackground = {
+type DevBackground = {
   readonly methodName: string;
-  readonly service: typeof Demo;
+  readonly service: typeof Dev;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof demo_pb.Color;
-  readonly responseType: typeof demo_pb.ColorResponse;
+  readonly requestType: typeof dev_pb.Color;
+  readonly responseType: typeof dev_pb.ColorResponse;
 };
 
-export class Demo {
+export class Dev {
   static readonly serviceName: string;
-  static readonly MouseMove: DemoMouseMove;
-  static readonly Background: DemoBackground;
+  static readonly MouseMove: DevMouseMove;
+  static readonly Background: DevBackground;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -56,27 +56,27 @@ interface BidirectionalStream<ReqT, ResT> {
   on(type: 'status', handler: (status: Status) => void): BidirectionalStream<ReqT, ResT>;
 }
 
-export class DemoClient {
+export class DevClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
   mouseMove(
-    requestMessage: demo_pb.MoveEvent,
+    requestMessage: dev_pb.MoveEvent,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: demo_pb.MoveResponse|null) => void
+    callback: (error: ServiceError|null, responseMessage: dev_pb.MoveResponse|null) => void
   ): UnaryResponse;
   mouseMove(
-    requestMessage: demo_pb.MoveEvent,
-    callback: (error: ServiceError|null, responseMessage: demo_pb.MoveResponse|null) => void
+    requestMessage: dev_pb.MoveEvent,
+    callback: (error: ServiceError|null, responseMessage: dev_pb.MoveResponse|null) => void
   ): UnaryResponse;
   background(
-    requestMessage: demo_pb.Color,
+    requestMessage: dev_pb.Color,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: demo_pb.ColorResponse|null) => void
+    callback: (error: ServiceError|null, responseMessage: dev_pb.ColorResponse|null) => void
   ): UnaryResponse;
   background(
-    requestMessage: demo_pb.Color,
-    callback: (error: ServiceError|null, responseMessage: demo_pb.ColorResponse|null) => void
+    requestMessage: dev_pb.Color,
+    callback: (error: ServiceError|null, responseMessage: dev_pb.ColorResponse|null) => void
   ): UnaryResponse;
 }
 

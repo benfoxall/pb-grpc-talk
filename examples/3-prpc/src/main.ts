@@ -2,43 +2,34 @@ import { html, render } from 'lit-html';
 
 const params = new URLSearchParams(document.location.search)
 
-// // an app is selected
-// if(params.has('a')) {
-//   // remove the nav options
-//   document.querySelector('#hostable').remove()
+// Try hard to ignore all this, and look at the actual 
+// loaded pages
 
-//   const joinURL = document.location.href.replace('host=', 'join=')
+const paths = {
+  'dev.host': import('./dev.host'),
+  'dev.join': import('./dev.join'),
+}
 
-//   document.querySelector('footer').appendChild(Object.assign(
-//     document.createElement('a'), {
-//       target: '_blank',
-//       href: joinURL,
-//       innerText: joinURL
-//     }
-//   ));
+const app = params.get('a');
 
-//   // ?join=foo
-//   if(params.has("join")) {
-//     join(params.get("join"))
-//   } else if(params.has("host"))  {
+if(app) {
 
-//     // host foo
-//     host(params.get("host"))
-//   }
+  const action =  
+    params.has("join") ? 'join' : 
+    params.has("host") ? 'host' : '';
 
-// } else {
+  const room = params.get(action);
 
-//   // add host= to each of the apps
-//   Array.from(
-//     document.querySelectorAll<HTMLAnchorElement>('#hostable a')
-//   ).forEach(a => {
-//     const url = new URL(a.href)
-    
-//     url.searchParams.append('host', Math.random().toString(32).split('.')[1])
-  
-//     a.href = url.toString();
-//   })
-// }
+  const path = paths[app + '.' + action];
+
+  if(path) {
+    path.then(imp => { imp.default(room)})
+  }
+
+  if(action === 'join') {
+    document.querySelector('h1').style.display = 'none'
+  }
+}
 
 
 const joinURL = document.location.href.replace('host=', 'join=')
@@ -50,6 +41,8 @@ const hostLink = (name: string) => html`
 
 const nav = (params: URLSearchParams) => html`
   ${
+    params.has('join') ? 
+      html`<h2 id="appName">${params.get('a')}</h2>` :
     params.has('a') ? 
       html`
         <h2 id="appName">${params.get('a')}</h2>
@@ -59,7 +52,7 @@ const nav = (params: URLSearchParams) => html`
       ` :
       html`
         <nav>
-          ${hostLink('demo')}
+          ${hostLink('dev')}
           ${hostLink('zoom')}
           ${hostLink('draw')}
         </nav>

@@ -1,5 +1,5 @@
 // package: 
-// file: demo.proto
+// file: dev.proto
 
 import * as jspb from "google-protobuf";
 

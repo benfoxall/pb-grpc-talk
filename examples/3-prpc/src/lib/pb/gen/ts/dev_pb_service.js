@@ -1,45 +1,45 @@
 // package: 
-// file: demo.proto
+// file: dev.proto
 
-var demo_pb = require("./demo_pb");
+var dev_pb = require("./dev_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
-var Demo = (function () {
-  function Demo() {}
-  Demo.serviceName = "Demo";
-  return Demo;
+var Dev = (function () {
+  function Dev() {}
+  Dev.serviceName = "Dev";
+  return Dev;
 }());
 
-Demo.MouseMove = {
+Dev.MouseMove = {
   methodName: "MouseMove",
-  service: Demo,
+  service: Dev,
   requestStream: false,
   responseStream: false,
-  requestType: demo_pb.MoveEvent,
-  responseType: demo_pb.MoveResponse
+  requestType: dev_pb.MoveEvent,
+  responseType: dev_pb.MoveResponse
 };
 
-Demo.Background = {
+Dev.Background = {
   methodName: "Background",
-  service: Demo,
+  service: Dev,
   requestStream: false,
   responseStream: false,
-  requestType: demo_pb.Color,
-  responseType: demo_pb.ColorResponse
+  requestType: dev_pb.Color,
+  responseType: dev_pb.ColorResponse
 };
 
-exports.Demo = Demo;
+exports.Dev = Dev;
 
-function DemoClient(serviceHost, options) {
+function DevClient(serviceHost, options) {
   this.serviceHost = serviceHost;
   this.options = options || {};
 }
 
-DemoClient.prototype.mouseMove = function mouseMove(requestMessage, metadata, callback) {
+DevClient.prototype.mouseMove = function mouseMove(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1];
   }
-  var client = grpc.unary(Demo.MouseMove, {
+  var client = grpc.unary(Dev.MouseMove, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
@@ -66,11 +66,11 @@ DemoClient.prototype.mouseMove = function mouseMove(requestMessage, metadata, ca
   };
 };
 
-DemoClient.prototype.background = function background(requestMessage, metadata, callback) {
+DevClient.prototype.background = function background(requestMessage, metadata, callback) {
   if (arguments.length === 2) {
     callback = arguments[1];
   }
-  var client = grpc.unary(Demo.Background, {
+  var client = grpc.unary(Dev.Background, {
     request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
@@ -97,5 +97,5 @@ DemoClient.prototype.background = function background(requestMessage, metadata, 
   };
 };
 
-exports.DemoClient = DemoClient;
+exports.DevClient = DevClient;
 

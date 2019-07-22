@@ -1,5 +1,10 @@
+/*
 
-// Ignore this!!
+IGNORE THIS!
+
+(IT'S FOR THE PEER-RPC TRANSPORT LAYER)
+
+*/
 
 syntax = 'proto3';
 

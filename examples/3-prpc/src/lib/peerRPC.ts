@@ -2,7 +2,7 @@ import {PeerServer, PeerClient} from './peerBase'
 import {RPCWrapper} from './pb/gen/ts/peer-rpc_pb'
 
 
-type Meta = {serviceName: string; fnName: string; peerId: string}
+export type Meta = {serviceName: string; fnName: string; peerId: string}
 export type Handler = (meta: Meta, payload: Uint8Array) => Uint8Array | Promise<Uint8Array>;
 
 export class PeerRPCServer extends PeerServer {

@@ -1,5 +1,5 @@
 
-import { PeerRPCServer, PeerRPCClient } from './peerRPC';
+import { PeerRPCServer, PeerRPCClient, Meta } from './peerRPC';
 
 type FilterFlags<Base, Condition> = {
   [Key in keyof Base]: 
@@ -21,7 +21,8 @@ type Implementation<S> = {
   readonly [P in keyof S]?: 
     S[P] extends Service ? (
       request: InstanceType<S[P]["requestType"]>,
-      response: InstanceType<S[P]["responseType"]>
+      response: InstanceType<S[P]["responseType"]>,
+      meta: Meta
     ) => void | Promise<void> : never;
 }
 
@@ -59,7 +60,7 @@ export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
         const response = new Response()
 
 
-        return Promise.resolve(handle(request, response))
+        return Promise.resolve(handle(request, response, meta))
           .then(() => response.serializeBinary())
 
 

@@ -18,7 +18,7 @@ message ColorResponse {
   string value = 1;
 }
 
-service Demo {
+service Dev {
   rpc MouseMove (MoveEvent) returns (MoveResponse);
 
   rpc Background (Color) returns (ColorResponse);

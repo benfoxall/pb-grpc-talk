@@ -1,5 +1,5 @@
 import {PeerServer, PeerClient} from './peerBase'
-import {RPCWrapper} from './pb/gen/ts/peer-rpc_pb'
+import {RPCWrapper} from './protos/generated/peer-rpc_pb'
 
 
 export type Meta = {serviceName: string; fnName: string; peerId: string}

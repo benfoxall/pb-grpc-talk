@@ -64,8 +64,9 @@ proto.RPCWrapper.prototype.toObject = function(opt_includeInstance) {
 proto.RPCWrapper.toObject = function(includeInstance, msg) {
   var f, obj = {
     peerid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    fnname: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    requestid: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    methodname: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    servicename: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    requestid: jspb.Message.getFieldWithDefault(msg, 4, 0),
     payload: msg.getPayload_asB64()
   };
 
@@ -109,13 +110,17 @@ proto.RPCWrapper.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setFnname(value);
+      msg.setMethodname(value);
       break;
     case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setServicename(value);
+      break;
+    case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setRequestid(value);
       break;
-    case 4:
+    case 5:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setPayload(value);
       break;
@@ -155,24 +160,31 @@ proto.RPCWrapper.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getFnname();
+  f = message.getMethodname();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
+  f = message.getServicename();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
   f = message.getRequestid();
   if (f !== 0) {
     writer.writeInt32(
-      3,
+      4,
       f
     );
   }
   f = message.getPayload_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      4,
+      5,
       f
     );
   }
@@ -195,46 +207,61 @@ proto.RPCWrapper.prototype.setPeerid = function(value) {
 
 
 /**
- * optional string fnName = 2;
+ * optional string methodName = 2;
  * @return {string}
  */
-proto.RPCWrapper.prototype.getFnname = function() {
+proto.RPCWrapper.prototype.getMethodname = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.RPCWrapper.prototype.setFnname = function(value) {
+proto.RPCWrapper.prototype.setMethodname = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional int32 requestId = 3;
+ * optional string serviceName = 3;
+ * @return {string}
+ */
+proto.RPCWrapper.prototype.getServicename = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.RPCWrapper.prototype.setServicename = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int32 requestId = 4;
  * @return {number}
  */
 proto.RPCWrapper.prototype.getRequestid = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
 /** @param {number} value */
 proto.RPCWrapper.prototype.setRequestid = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional bytes payload = 4;
+ * optional bytes payload = 5;
  * @return {!(string|Uint8Array)}
  */
 proto.RPCWrapper.prototype.getPayload = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
 /**
- * optional bytes payload = 4;
+ * optional bytes payload = 5;
  * This is a type-conversion wrapper around `getPayload()`
  * @return {string}
  */
@@ -245,7 +272,7 @@ proto.RPCWrapper.prototype.getPayload_asB64 = function() {
 
 
 /**
- * optional bytes payload = 4;
+ * optional bytes payload = 5;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getPayload()`
@@ -259,7 +286,7 @@ proto.RPCWrapper.prototype.getPayload_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.RPCWrapper.prototype.setPayload = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 

@@ -1,4 +1,3 @@
-
 import signalhub from 'signalhub'
 import Peer = require('simple-peer');
 

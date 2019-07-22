@@ -4,8 +4,11 @@ export class RPCWrapper extends jspb.Message {
   getPeerid(): string;
   setPeerid(value: string): void;
 
-  getFnname(): string;
-  setFnname(value: string): void;
+  getMethodname(): string;
+  setMethodname(value: string): void;
+
+  getServicename(): string;
+  setServicename(value: string): void;
 
   getRequestid(): number;
   setRequestid(value: number): void;
@@ -26,7 +29,8 @@ export class RPCWrapper extends jspb.Message {
 export namespace RPCWrapper {
   export type AsObject = {
     peerid: string,
-    fnname: string,
+    methodname: string,
+    servicename: string,
     requestid: number,
     payload: Uint8Array | string,
   }

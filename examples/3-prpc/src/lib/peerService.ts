@@ -1,7 +1,5 @@
 
-import {Calculator} from './pb/gen/ts/calculator_pb_service'
 import { PeerRPCServer, PeerRPCClient } from './peerRPC';
-import { MoveEvent } from './pb/gen/ts/demo_pb';
 
 type FilterFlags<Base, Condition> = {
   [Key in keyof Base]: 
@@ -37,13 +35,18 @@ type Methods<S> = {
 
 // type testing = Methods<typeof DemoService>
 
-export class PeerServiceServer<S> extends PeerRPCServer {
+type NamedService = {serviceName: string};
+
+export class PeerServiceServer<S extends NamedService> extends PeerRPCServer {
   constructor(room: string, service: S, impl: Implementation<S>) {
     super(room, (meta, payload) => {
 
-      
+      if(meta.serviceName !== service.serviceName) {
+        console.error("mismatching service - we're probably screwed");
+      }
 
-      const name = meta.fnName
+      const name = meta.fnName;
+
       const handle = impl[name];
 
       if(handle) {
@@ -69,7 +72,7 @@ export class PeerServiceServer<S> extends PeerRPCServer {
 }
 
 
-export class PeerServiceClient<S> extends PeerRPCClient {
+export class PeerServiceClient<S extends NamedService> extends PeerRPCClient {
 
   constructor(room: string, private readonly service: S) {
     super(room);
@@ -88,8 +91,11 @@ export class PeerServiceClient<S> extends PeerRPCClient {
     const request = new Request();
 
     await setter(request);
-    
-    const responseData = await super.call(name as string, request.serializeBinary());
+
+    const service = this.service.serviceName;
+    const method = name + ''
+
+    const responseData = await super.call(service, method, request.serializeBinary());
 
     // @ts-ignore
     return new this.service[name].responseType.deserializeBinary(responseData);

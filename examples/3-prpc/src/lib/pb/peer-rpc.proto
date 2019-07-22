@@ -5,8 +5,11 @@ syntax = 'proto3';
 
 message RPCWrapper {
   string peerId = 1;
-  string fnName = 2;
-  int32 requestId = 3;
+  string methodName = 2;
+  string serviceName = 3;
 
-  bytes payload = 4;
+  // for matching up responses
+  int32 requestId = 4;
+
+  bytes payload = 5;
 }

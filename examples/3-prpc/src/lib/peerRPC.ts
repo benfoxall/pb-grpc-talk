@@ -2,7 +2,7 @@ import {PeerServer, PeerClient} from './peerBase'
 import {RPCWrapper} from './pb/gen/ts/peer-rpc_pb'
 
 
-type Meta = {fnName: string; peerId: string;}
+type Meta = {serviceName: string; fnName: string; peerId: string}
 export type Handler = (meta: Meta, payload: Uint8Array) => Uint8Array | Promise<Uint8Array>;
 
 export class PeerRPCServer extends PeerServer {
@@ -15,7 +15,8 @@ export class PeerRPCServer extends PeerServer {
       const request = RPCWrapper.deserializeBinary(payload);
 
       const resp = handler({
-        fnName: request.getFnname(),
+        serviceName: request.getServicename(),
+        fnName: request.getMethodname(),
         peerId: id,
       }, request.getPayload_asU8())
 
@@ -57,12 +58,15 @@ export class PeerRPCClient extends PeerClient {
     })
   }
 
-  call(fnName: string, payload: Uint8Array): Promise<Uint8Array> {
+  call(serviceName: string, methodName: string, payload: Uint8Array): Promise<Uint8Array> {
 
     const requestId = this.requestCount++
 
     this.wrapper.setRequestid(requestId)
-    this.wrapper.setFnname(fnName)
+
+    this.wrapper.setMethodname(methodName)
+    this.wrapper.setServicename(serviceName)
+
     this.wrapper.setPayload(payload)
 
     super.send(this.wrapper.serializeBinary())

@@ -163,11 +163,28 @@
 
 # ~~Talk Intro~~
 
-# Protocol Buffers
+# 
 
 ---
 
+# [fit] Protocol 
+# [fit] Buffers
+# and JSON
+
+[.background-color: #ffcc00]
+
+<!---
+
+# getting to
+# [fit] Protocol Buffers
+
+# from
 # [fit] JSON
+-->
+
+---
+
+# JSON → Protocol Buffers
 
 ---
 
@@ -205,7 +222,7 @@
 ```
 
 ---
-
+<!--
 ## Store things better-er
 
 # [fit] 123e4567-e89b-12d3-a456-426655440000
@@ -224,6 +241,8 @@
 ^ TODO - it might be better to to data-uri here
 
 ---
+
+-->
 
 ![](sketch/json-2-efficient-storage.png)
 
@@ -350,16 +369,208 @@ WHY IS IT GOOD TO BE USING THIS IN THE BROWSER
 
 ---
 
-# GRPC
-
----
-
-
-# [fit] REST
+# [fit] gRPC
+# and REST
 
 [.background-color: #ffcc00]
 
 ---
 
+# Architectural Models
+
+REST - Resource Oriented
+gRPC - Service Oriented
+
+---
+
+# REST - Resource Oriented
+## Identifier
+
+```
+GET /posts/42/comments/15
+```
+
+↑ Relates to a resource
+
+---
+
+# gRPC - Service Oriented
+## Identifier
+
+```
+CommentService/LoadComment
+```
+
+↑ Relates to a service method
+
+---
+
+# Interactions
+
+* Request / Response (REST & gRPC)
+* Request / Responses (gRPC)
+* Requests / Response (gRPC)
+* Requests / Responses (gRPC)
+
+[.build-lists: true]
+
+---
+
+# Transport
+
+REST - HTTP1/HTTP1.1/HTTP2/…
+gRPC - HTTP2
+
+---
+
+# Why Only HTTP2
+
+![inline](images/http2.jpg)
+
+slideshare.net/Enbac29/http2-standard-for-video-streaming
+
+^ you wouldn't want a waterfall when calling functions
+
+---
+
+# [fit] Browser Support 
+
+---
+
+# [fit] Browser Support - REST
+
+# [fit] 100%
+
+---
+
+# [fit] Browser Support – gRPC
+
+# [fit] 0%
+
+---
+
+# gRPC-web [^1]
 
 
+[^1]: [github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md)
+
+---
+
+# Using gRPC-web today
+
+1. Use grpc-web-proxy
+2. Use Envoy Proxy
+3. Wait for tomorrow
+
+> In the future, we expect gRPC-Web to be supported in language-specific Web frameworks, such as Python, Java, and Node.
+
+---
+
+# The
+# Totally
+# Cool
+# Awesome
+# Thing
+
+----
+
+# gRPC interfaces are typed
+
+```bash
+# calculator.proto
+service Calculator {
+  rpc Add (NumberList) returns (Number);
+}
+
+
+# use grpc plugin
+protoc calculator.proto
+  --plugin=protoc-gen-grpc=grpc-plugin \
+  --grpc_out=.
+  
+
+# generated ./calculator_grpc_pb.js
+```
+
+---
+
+# Demo
+
+```
+service Zoom {
+
+    rpc echo(EchoMessage) returns (EchoMessage);
+
+    rpc systemInfo (Noop) returns (stream SystemInfo);
+    
+    rpc screenShot (Noop) returns (Image);
+
+    rpc setColorScheme (ColorSchemeRequest) returns (Noop);
+
+}
+```
+
+---
+
+## Why it's good to bring this to the web
+
+* Components ↔︎ Microservices
+* Make IPC a thing – WebAssembly, Workers, etc.
+* Avoid siloing
+
+---
+
+## Why it feels weird
+
+* The web *is* REST
+* JS has been a single language on a platform
+* Obfuscation sucks
+* We're used to things being fuzzy
+* Accessibility 
+
+^ Hypermedia as the engine of application state
+
+<!--
+
+"A REST API should never have “typed” resources"
+https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
+
+-->
+
+---
+
+# Quick summary
+
+* Protocol Buffers
+* gRPC
+
+
+---
+
+[BACKEND]
+
+---
+
+[NO-BACKEND]
+
+---
+
+# .proto → service → gRPC
+
+# .proto → service → webRTC-RPC
+
+---
+
+[peer] => [peer]
+
+[peerT] => [peerT]
+
+[peerT<S>] => [peerT<S>]
+
+---
+
+# Demo
+
+Zoom Service (Web edition)
+
+---

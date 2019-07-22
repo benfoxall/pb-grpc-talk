@@ -12,9 +12,7 @@ app.use(
   '/api',
   proxy({
     target: 'http://localhost:8080',
-    pathRewrite: {
-      '^/api/': '/' // remove base path
-    },
+    pathRewrite: {'^/api/': '/'},
   })
 )
 

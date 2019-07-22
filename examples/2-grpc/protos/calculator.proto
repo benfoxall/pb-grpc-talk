@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+message AddRequest {
+  repeated float numbers = 1;
+}
+
+message AddResult {
+  float result = 1;
+}
+
+message GraphRequest {
+  string equation = 1;
+}
+
+message GraphResult {
+  bool success = 1;
+  repeated float points = 2;
+}
+
+service Calculator {
+  rpc Add (AddRequest) returns (AddResult);
+
+  rpc Graph (GraphRequest) returns (GraphResult);
+}

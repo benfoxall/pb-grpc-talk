@@ -2,7 +2,7 @@ import { Example } from './protos/example_pb'
 
 const example = new Example()
 
-example.setName("Some stuff here…………")
+example.setName("Some stuff here")
 
 const data = example.serializeBinary()
 

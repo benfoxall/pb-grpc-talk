@@ -11,4 +11,22 @@ npm install -g ts-protoc-gen
 
 
 
+npm install -g grpc-tools
+
+
+curl -L https://github.com/improbable-eng/grpc-web/releases/download/v0.9.6/grpcwebproxy-v0.9.6-osx-x86_64.zip > grpcwebproxy.zip
+
+unzip grpcwebproxy.zip
+
+mv dist/grpcwebproxy-v0.9.6-osx-x86_64 /usr/local/bin/grpcwebproxy
+
+
+
+
+
+
+grpcwebproxy \
+    --backend_addr=localhost:9090 \
+    --run_tls_server=false
+    
 ```

@@ -1,27 +1,35 @@
 {
-  "name": "x-webrtcrpc-eroids",
+  "name": "demos",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "expr-eval": "^1.2.3",
+    "grpc": "^1.22.2",
     "lit-html": "^1.1.1",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "signalhub": "^4.9.0",
     "simple-peer": "^9.4.0",
     "src": "^1.1.2",
+    "systeminformation": "^4.14.4",
     "typescript": "^3.5.3"
   },
   "devDependencies": {
     "@improbable-eng/grpc-web": "^0.9.6",
     "@types/google-protobuf": "^3.7.1",
     "@types/simple-peer": "^6.1.6",
+    "dark-mode": "^3.0.0",
+    "express": "^4.17.1",
     "google-protobuf": "^3.9.0",
-    "grpc-web": "^1.0.5"
+    "grpc-web": "^1.0.5",
+    "http-proxy-middleware": "^0.19.1",
+    "nodemon": "^1.19.1",
+    "parcel-bundler": "^1.12.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo1": "code examples/1-protocol-buffers & parcel examples/1-protocol-buffers/index.html & ts-node-dev --respawn examples/1-protocol-buffers/backend.ts"
   },
   "author": "",
   "license": "MIT"

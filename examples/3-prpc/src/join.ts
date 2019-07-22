@@ -1,6 +1,6 @@
 
 import { PeerServiceClient } from './lib/peerService';
-import { Zoom } from './lib/pb/gen/ts/zoom_pb_service';
+import { Zoom } from './lib/pb/generated/zoom_pb_service';
 
 export default async (room) => {
   const main = document.querySelector('main')

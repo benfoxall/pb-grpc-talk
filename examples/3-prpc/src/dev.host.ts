@@ -1,5 +1,5 @@
 import { PeerServiceServer } from "./lib/peerService";
-import { Dev } from "./lib/pb/gen/ts/dev_pb_service";
+import { Dev } from "./lib/pb/generated/dev_pb_service";
 
 export default (room: string) => {
 

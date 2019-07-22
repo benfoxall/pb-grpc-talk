@@ -47,7 +47,7 @@ const nav = (params: URLSearchParams) => html`
       html`
         <h2 id="appName">${params.get('a')}</h2>
         <footer>
-          <a href="${joinURL}">${joinURL}</a>
+          <a target="_blank" href="${joinURL}">${joinURL}</a>
         </footer>
       ` :
       html`

@@ -12,7 +12,6 @@ rm -f $OUT/**/*.ts $OUT/**/*.js
 
 # --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` helloworld.proto
 
-
 mkdir -p $OUT/ts
 mkdir -p $OUT/grpc
 mkdir -p $OUT/grpc-web

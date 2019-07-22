@@ -1,14 +1,21 @@
 <html>
   <head>
     <style>
-      body { font-family: sans-serif }
+      body { font-family: sans-serif; transition: .5s }
       @media (prefers-color-scheme: dark) {
-        body {background: #000; color: #fff}
+        body {background: #333; color: #fff}
       }
     </style>
   </head>
   <body>
-    <pre>[debug]</pre>
+    <fieldset>
+      <legend>Zoom</legend>
+
+      <meter>cp1</meter>
+      <div id="zoom"></div>
+      
+    </fieldset>
+
     <script src="./frontend.ts"></script>
   </body>
 </html>

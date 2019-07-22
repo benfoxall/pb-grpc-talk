@@ -1,25 +1,49 @@
 import {html, render} from 'lit-html';
 import { ZoomClient } from "./protos/dist/ts/ZoomServiceClientPb"
-import { BrightnessRequest, DarkModeRequest } from './protos/dist/ts/zoom_pb';
+import { ColorSchemeRequest, Noop } from './protos/dist/ts/zoom_pb';
 
 var zoomClient = new ZoomClient('/api');
 
-const b = new BrightnessRequest();
-b.setValue(12);
+const {DARK, LIGHT} = ColorSchemeRequest.Scheme;
 
-zoomClient.setBrightness(b, {}, () => {
-  console.log("setting brightness")
+zoomClient.getSystemInfo(new Noop())
+  .on('data', (s) => {
+    console.log("--s", s);
+
+    document.querySelector('#zoom').innerHTML = JSON.stringify(s.toObject(), null, 2)
+  })
+
+
+zoomClient.screenShot(new Noop(), {}, (err, response) => {
+
+  const file = new Blob([response.getFile_asU8()], {
+    type: 'image/jpg'
+  })
+const url = URL.createObjectURL(file)
+
+console.log(url)
+
+  response.getFile_asB64();
+
+
 })
 
 
-// @ts-ignore
-window.fn = (bool: boolean) => {
+class Fn {
 
-  const mode = new DarkModeRequest()
-  mode.setOn(bool)
+  dark() {
+    const request = new ColorSchemeRequest()
+    request.setScheme(DARK)
+    zoomClient.setColorScheme(request, {}, () => {})
+  }
 
-  zoomClient.setDarkMode(mode, {}, () => {
-    console.log("WAS SET")
-  })
+  light() {
+    const request = new ColorSchemeRequest()
+    request.setScheme(LIGHT)
+    zoomClient.setColorScheme(request, {}, () => {})
+  }
 
 }
+
+// @ts-ignore
+window.fn = new Fn();

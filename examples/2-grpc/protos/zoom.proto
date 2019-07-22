@@ -2,16 +2,28 @@ syntax = "proto3";
 
 message Noop {}
 
-message DarkModeRequest {
-    bool on = 1;
+message ColorSchemeRequest {
+    enum Scheme {
+        DARK = 0;
+        LIGHT = 1;
+    }
+
+    Scheme scheme = 1;
 };
 
-message BrightnessRequest {
-    float value = 1;
+message SystemInfo {
+    repeated float cpuLoads = 1;
+    float battery = 2;
+}
+
+message ScreenShot {
+    bytes file = 1;
 }
 
 service Zoom {
-    rpc setDarkMode (DarkModeRequest) returns (Noop);
+    rpc setColorScheme (ColorSchemeRequest) returns (Noop);
 
-    rpc setBrightness (BrightnessRequest) returns (Noop);
+    rpc getSystemInfo (Noop) returns (stream SystemInfo);
+
+    rpc screenShot (Noop) returns (ScreenShot);
 }

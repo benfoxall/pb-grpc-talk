@@ -22,11 +22,14 @@ mv dist/grpcwebproxy-v0.9.6-osx-x86_64 /usr/local/bin/grpcwebproxy
 
 
 
+# agreatfool/grpc_tools_node_protoc_ts
+npm install grpc_tools_node_protoc_ts --global
+
 
 
 
 grpcwebproxy \
     --backend_addr=localhost:9090 \
     --run_tls_server=false
-    
+
 ```

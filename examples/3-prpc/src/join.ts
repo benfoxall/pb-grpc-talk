@@ -1,6 +1,6 @@
 
 import { PeerServiceClient } from './lib/peerService';
-import { Demo } from './lib/pb/gen/ts/demo_pb_service';
+import { Zoom } from './lib/pb/gen/ts/zoom_pb_service';
 
 export default async (room) => {
   const main = document.querySelector('main')
@@ -16,22 +16,21 @@ export default async (room) => {
   input.type = 'color'
   main.appendChild(input)
 
-  const client = new PeerServiceClient(room, Demo);
-
+  const client = new PeerServiceClient(room, Zoom);
 
   input.addEventListener('change', () => {
-    client.issue("Background", (request) => {
-      request.setValue(input.value)
-    })
+    client.issue("echo", (request) => {
+      request.setText(input.value)
+    }).then(r => console.log(r.getText()))
   })
 
-  window.addEventListener('mousemove', (e) => {
-    client.issue("MouseMove", (request) => {
-      request.setLeft(e.clientX)
-      request.setTop(e.clientY)
-    }).then(response => {
-      console.log(response.getAnswer())
-    })
+  // window.addEventListener('mousemove', (e) => {
+  //   client.issue("MouseMove", (request) => {
+  //     request.setLeft(e.clientX)
+  //     request.setTop(e.clientY)
+  //   }).then(response => {
+  //     console.log(response.getAnswer())
+  //   })
 
-  })
+  // })
 }

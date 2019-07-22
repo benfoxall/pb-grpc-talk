@@ -1,6 +1,5 @@
 import { PeerServiceServer } from './lib/peerService';
-import { Demo } from './lib/pb/gen/ts/demo_pb_service';
-// import { Demo } from './lib/pb/gen/ts/';
+import { Zoom } from './lib/pb/gen/ts/zoom_pb_service';
 
 export default (room: string) => {
   const main = document.querySelector('main')
@@ -12,25 +11,16 @@ export default (room: string) => {
     )
   )
 
-  new PeerServiceServer(room, Demo, {
+  new PeerServiceServer(room, Zoom, {
+    echo: (req, res) => {
 
-    Background: (request) => {
-      console.log("Background", request.getValue())
+      res.setText(
+        req.getText().toLocaleUpperCase() + '!??11?✨'
+      )
 
-      document.body.style.background = request.getValue();
-    },
-
-    MouseMove: (request, response) => {
-      // console.log("MODE", request.toObject())
-
-      response.setAnswer(request.getLeft() + request.getTop())
-      
-      Object.assign(main.style, {
-        position: 'absolute',
-        left: request.getLeft() + 'px',
-        top: request.getTop() + 'px',
-      })
     }
+
+    
 
   })
 }

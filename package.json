@@ -6,6 +6,7 @@
   "dependencies": {
     "expr-eval": "^1.2.3",
     "grpc": "^1.22.2",
+    "lit": "^1.0.1",
     "lit-html": "^1.1.1",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",

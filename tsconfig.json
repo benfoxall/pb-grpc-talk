@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    // "moduleResolution": "classic"
+    "jsx": "react",
+    "esModuleInterop": true
   },
   "include": [
     "examples/**/*"
   ],
-  // "exclude": [
-  //   "node_modules"
-  // ]
 }

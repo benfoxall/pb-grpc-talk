@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "data-uri-to-buffer": "^2.0.1",
+    "examples": "^0.1.0",
     "expr-eval": "^1.2.3",
     "grpc": "^1.22.2",
+    "jslib-html5-camera-photo": "^3.0.2-beta.0",
     "lit": "^1.0.1",
     "lit-html": "^1.1.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "screenshot-desktop": "^1.8.0",
@@ -19,8 +24,12 @@
     "upsidedown": "0.0.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@improbable-eng/grpc-web": "^0.9.6",
     "@types/google-protobuf": "^3.7.1",
+    "@types/react": "^16.8.23",
     "@types/simple-peer": "^6.1.6",
     "dark-mode": "^3.0.0",
     "express": "^4.17.1",
@@ -33,6 +42,7 @@
     "ts-protoc-gen": "^0.10.0"
   },
   "scripts": {
+    "build": "parcel build examples/3-prpc/index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "demo1": "code examples/1-protocol-buffers & parcel examples/1-protocol-buffers/index.html & ts-node-dev --respawn examples/1-protocol-buffers/backend.ts"
   },

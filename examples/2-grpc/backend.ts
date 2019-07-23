@@ -4,7 +4,7 @@ import { Server, ServerCredentials } from 'grpc';
 import { ZoomService, IZoomServer } from './protos/generated/zoom_grpc_pb'
 import { Noop, ColorSchemeRequest, SystemInfo, Image } from './protos/generated/zoom_pb'
 import { currentLoad, battery } from 'systeminformation';
-import * as osxScreenshot from 'screenshot-desktop';
+import osxScreenshot from 'screenshot-desktop';
 
 const sysInfo = new SystemInfo();
 const image = new Image();
@@ -12,8 +12,8 @@ const image = new Image();
 const zoomHandlers: IZoomServer = {
 
   // ECHO SERVICE
-  echo: ({request}, callback) => {
-    
+  echo: ({ request }, callback) => {
+
     request.setText(
       request.getText().toLocaleUpperCase() + '!!1!!one!'
     )
@@ -22,20 +22,20 @@ const zoomHandlers: IZoomServer = {
   },
 
   // Streaming Response
-  systemInfo:(stream) => {
+  systemInfo: (stream) => {
 
     stream.write(sysInfo)
 
     const interval = setInterval(() => {
-      if(!stream.writable)  return clearInterval(interval);
-    
+      if (!stream.writable) return clearInterval(interval);
+
       stream.write(sysInfo)
     }, 1000)
   },
 
   // More data!
   screenShot: (_, callback) => {
-    
+
     osxScreenshot()
       .then((d: Buffer) => {
 
@@ -47,7 +47,7 @@ const zoomHandlers: IZoomServer = {
   },
 
   // Extra fun thing
-  setColorScheme:({request}, callback) => {
+  setColorScheme: ({ request }, callback) => {
 
     toggle(request.getScheme() === ColorSchemeRequest.Scheme.DARK)
 
@@ -72,3 +72,33 @@ setInterval(() => {
     sysInfo.setCharging(d.ischarging)
   })
 }, 1000)
+
+
+
+/**
+ * RUN GRPC PROXY FROM HERE.
+ * 
+ * (NEEDS grpcwebproxy to be installed (see dev-steps.md))
+ * 
+ * 
+ */
+import { spawn } from 'child_process';
+
+const proxy = spawn('grpcwebproxy', [
+  '--backend_addr=localhost:9090',
+  '--run_tls_server=false',
+  '--server_http_max_write_timeout=1h',
+  '--allow_all_origins',
+])
+
+proxy.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+proxy.stderr.on('data', (data) => {
+  console.log(`stderr: ${data}`);
+});
+
+proxy.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
+});

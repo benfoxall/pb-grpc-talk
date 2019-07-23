@@ -9,7 +9,7 @@ export default (room: string) => {
 
   let cameraPhoto
   const getCamera = async () => {
-    if(cameraPhoto) return cameraPhoto;
+    if (cameraPhoto) return cameraPhoto;
 
     const video = document.createElement('video')
     video.autoplay = true
@@ -39,12 +39,12 @@ export default (room: string) => {
 
       const n = Date.now();
 
-      const v = Array.from({length: 4}, (_, i) => i)
-        .map(i => (Math.sin(i * 10 + (n/1000)) + 1) * 50)
+      const v = Array.from({ length: 4 }, (_, i) => i)
+        .map(i => (Math.sin(i * 10 + (n / 1000)) + 1) * 50)
 
       res.setCpuloadsList(v)
 
-      res.setBattery(Math.random() * 100|0)
+      res.setBattery(Math.random() * 100 | 0)
     },
 
     screenShot: async (req, res) => {
@@ -62,8 +62,8 @@ export default (room: string) => {
     },
 
     setColorScheme: (req) => {
-      
-      if(req.getScheme() === 1) {
+
+      if (req.getScheme() === 1) {
         document.body.style.background = '#333'
         document.body.style.color = '#ccc'
       } else {

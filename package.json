@@ -39,12 +39,16 @@
     "http-proxy-middleware": "^0.19.1",
     "nodemon": "^1.19.1",
     "parcel-bundler": "^1.12.3",
+    "ts-node": "~8.3.0",
     "ts-protoc-gen": "^0.10.0"
   },
   "scripts": {
     "build": "parcel build examples/3-prpc/index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "demo1": "code examples/1-protocol-buffers & parcel examples/1-protocol-buffers/index.html & ts-node-dev --respawn examples/1-protocol-buffers/backend.ts"
+    "demo1": "parcel examples/1-protocol-buffers/index.html",
+    "demo2": "ts-node examples/2-grpc/app.ts",
+    "demo2.backend": "ts-node examples/2-grpc/backend.ts",
+    "demo3": "parcel examples/3-prpc/index.html"
   },
   "author": "",
   "license": "MIT"

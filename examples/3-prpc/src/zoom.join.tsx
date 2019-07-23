@@ -1,6 +1,6 @@
 
-import React, {useState, FunctionComponent, useEffect} from 'react';
-import {render} from 'react-dom';
+import React, { useState, FunctionComponent, useEffect } from 'react';
+import { render } from 'react-dom';
 import { PeerServiceClient } from "./lib/peerService";
 import { Zoom } from "./lib/protos/generated/zoom_pb_service";
 import { SystemInfo, Image } from "./lib/protos/generated/zoom_pb";
@@ -23,20 +23,39 @@ const Component: FunctionComponent<Props> = (props) => {
 
   return (
     <fieldset>
-        <legend>Zoom</legend>
-        <Echo {...props}/>
-        <hr />
+      <legend>Zoom</legend>
+
+      <details>
+        <summary>Echo </summary>
+        <Echo {...props} />
+      </details>
+
+      <hr />
+
+      <details>
+        <summary>System Info </summary>
         <SystemInfoPanel {...props} />
-        <hr />
+      </details>
+
+      <hr />
+
+      <details>
+        <summary>Screenshot </summary>
         <Screenshot {...props} />
-        <hr />
+      </details>
+
+      <hr />
+
+      <details>
+        <summary>Scheme </summary>
         <ColorScheme {...props} />
-      </fieldset>
+      </details>
+    </fieldset>
   )
 }
 
 
-const Echo: FunctionComponent<Props> = ({client}) => {
+const Echo: FunctionComponent<Props> = ({ client }) => {
 
   const [echo, setEcho] = useState<string>();
 
@@ -44,7 +63,7 @@ const Echo: FunctionComponent<Props> = ({client}) => {
     const text = e.target.value;
 
     client
-      .issue("echo", (req) =>  req.setText(text))
+      .issue("echo", (req) => req.setText(text))
       .then(result => {
         setEcho(result.getText())
       })
@@ -52,15 +71,14 @@ const Echo: FunctionComponent<Props> = ({client}) => {
 
   return (
     <label>
-        echo: 
-        <input type="text" onChange={change} />
-        <span id="echo-output" >{echo}</span>
+      <input type="text" onChange={change} className="cta" />
+      <span id="echo-output" >{echo}</span>
     </label>
   )
 }
 
 
-const SystemInfoPanel: FunctionComponent<Props> = ({client}) => {
+const SystemInfoPanel: FunctionComponent<Props> = ({ client }) => {
 
   const [info, setInfo] = useState<SystemInfo>();
 
@@ -68,7 +86,7 @@ const SystemInfoPanel: FunctionComponent<Props> = ({client}) => {
 
     const poll = async () => {
       setInfo(
-        await client.issue("systemInfo", () => {})
+        await client.issue("systemInfo", () => { })
       )
     }
 
@@ -77,60 +95,62 @@ const SystemInfoPanel: FunctionComponent<Props> = ({client}) => {
 
   return (
     <label>
-        cpu:
-        {info && info.getCpuloadsList().map((n, i) => 
-          <meter key={i} value={n} max="100" min="0" />  
-        )}
 
-        battery: {info && info.getBattery()}%
+      <h4>CPUs</h4>
+      <div className="meters">
+        {info && info.getCpuloadsList().map((n, i) =>
+          <meter key={i} value={n} max="100" min="0" />
+        )}
+      </div>
+
+
+      <h4>Battery</h4>
+      {info && info.getBattery()}%
     </label>
   )
 }
 
-const Screenshot: FunctionComponent<Props> = ({client}) => {
+const Screenshot: FunctionComponent<Props> = ({ client }) => {
 
   const [images, setImages] = useState<string[]>([])
 
   const capture = () => {
-    client.issue("screenShot", () => {})
-    .then(back => {
+    client.issue("screenShot", () => { })
+      .then(back => {
 
-      console.log('---', back.getType())
-      const url = URL.createObjectURL(
-        new Blob([back.getBytes_asU8()],  { type: back.getType() }
-      ))
+        console.log('---', back.getType())
+        const url = URL.createObjectURL(
+          new Blob([back.getBytes_asU8()], { type: back.getType() }
+          ))
 
-      console.log(url)
-    
-      setImages(others => [url].concat(others))
-    })
+        console.log(url)
+
+        setImages(others => [url].concat(others))
+      })
   }
 
   return (
     <label>
-        screenshot:
-        <button onClick={capture}>Capture</button>
-        <hr />
+      <button className="cta" onClick={capture}>Capture</button>
+
+      <section className="imagePanel">
         {images.map((src, i) => <img key={i} src={src} />)}
+      </section>
     </label>
   )
 }
 
 
-const ColorScheme: FunctionComponent<Props> = ({client}) => {
+const ColorScheme: FunctionComponent<Props> = ({ client }) => {
   const change = (e) => {
-
-    client.issue('setColorScheme', req => 
-      req.setScheme(e.target.checked ? 1: 0)
+    client.issue('setColorScheme', req =>
+      req.setScheme(e.target.checked ? 1 : 0)
     )
-
-    // console.log(e.target.checked)
   }
 
   return (
-    <label>
-        Dark Mode:
-        <input type="checkbox" onChange={change} />
+    <label className="cta">
+      😎 🎉 <input type="checkbox" onChange={change} />
     </label>
   )
 }

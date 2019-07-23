@@ -30,8 +30,14 @@ export default (room: string) => {
 
   new PeerServiceServer(room, Zoom, {
     echo: (req, res) => {
+
+      console.log(`🐴: ${req.getText()}`)
+
       res.setText(
-        req.getText() + '!'
+        req.getText()
+          .toLocaleUpperCase()
+          .split('')
+          .join('✨')
       )
     },
 
@@ -40,7 +46,7 @@ export default (room: string) => {
       const n = Date.now();
 
       const v = Array.from({ length: 4 }, (_, i) => i)
-        .map(i => (Math.sin(i * 10 + (n / 1000)) + 1) * 50)
+        .map(i => (Math.sin(i * 10 + (n / 6000)) + 1) * 50)
 
       res.setCpuloadsList(v)
 

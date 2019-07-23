@@ -1,0 +1,137 @@
+
+body {
+    font-family: sans-serif;
+    background: #ccc;
+    color: #111;
+    transition: 2s
+  }
+
+@media (prefers-color-scheme: dark) {
+body {
+    background: #333;
+    color: #fff
+}
+}
+
+img {
+max-width: 100%;
+}
+
+  
+  #appName {
+    font-size: 2em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: .5em;
+    margin: 0;
+    background: #eee;
+  }
+  
+  h1 {
+    right: auto;
+    padding: .2em;
+    margin: 0;
+  }
+  
+  footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: #ffffff33
+  }
+  
+  footer a{
+    color: #000;
+    padding: 1em;
+    display: block;
+    font-weight: 800;
+  }
+  
+  nav {
+    font-size: 6vw;
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column
+  }
+  nav a{
+    padding: .5em;
+  }
+  a {
+    transition: .3s;
+    color: #000;
+  }
+  a:hover {
+    color:aquamarine;
+    background: #000;
+  }
+  
+  
+  .imagePanel {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .imagePanel img {
+    width: 20%
+  }
+  
+  .imagePanel img:first-child {
+    width: 100%
+  }
+  
+  input.cta {
+    font-size: 2em;
+    display: block;
+    width: 100%
+  }
+  
+  #echo-output {
+    font-size: 3em;
+    padding: .5em 0;
+    display: block;
+  }
+  
+  
+  .meters meter {
+    display: block;
+    width: 100%;
+  }
+  
+  h4 {
+    margin: 1em 0;
+  }
+  
+  button.cta {
+    font-size: 2em;
+    width: 100%;
+    background: #fff;
+    margin: .5em 0
+  }
+  
+  label.cta {
+    font-size: 3em;
+  }
+  
+  fieldset {
+    margin: 3em 0;
+    border: 2px solid #fff;
+  }
+  hr {
+    border: 1px solid #fff;
+  }
+  
+  .dark-mode, .light-mode {
+      padding: 1;
+      font-size: 1em;
+      width: 50%;
+      margin: 1em 0;
+      
+  }
+
+  .dark-mode {
+    background: #000
+  }
+
+  .light-mode {
+    background: #fff
+  }

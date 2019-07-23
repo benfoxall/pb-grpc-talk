@@ -1,46 +1,12 @@
 <html>
-  <head>
-    <style>
-      body { font-family: sans-serif; transition: .5s }
 
-      @media (prefers-color-scheme: dark) {
-        body {background: #333; color: #fff}
-      }
+<head>
+  <link rel="stylesheet" href="main.css">
+</head>
 
-      img { max-width: 100%; }
-    </style>
-  </head>
-  <body>
-    <fieldset>
-      <legend>Zoom</legend>
-      <label>
-          echo: 
-          <input type="text" />
-          <span id="echo-output" >OUTPUT!!</span>
-      </label>
-      <hr />
-      <button>SystemInfo</button>
-      <br />
-      
-      cpu: 
-      <meter>cp1</meter>
-      <meter>cp1</meter>
-      <meter>cp1</meter>
-      <meter>cp1</meter>
+<body>
+  <main></main>
+  <script src="./frontend.tsx"></script>
+</body>
 
-      battery: 50% 🔌
-      
-      <hr />
-
-      <button>screenshot</button>
-
-      <hr />
-
-      <button>dark</button> <button>light</button>
-
-      <pre id="zoom"></pre>
-    </fieldset>
-
-    <script src="./frontend.ts"></script>
-  </body>
 </html>

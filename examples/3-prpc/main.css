@@ -105,3 +105,20 @@ fieldset {
 hr {
   border: 1px solid #fff;
 }
+
+
+.dark-mode, .light-mode {
+  padding: 1;
+  font-size: 1em;
+  width: 50%;
+  margin: 1em 0;
+  
+}
+
+.dark-mode {
+background: #000
+}
+
+.light-mode {
+background: #fff
+}

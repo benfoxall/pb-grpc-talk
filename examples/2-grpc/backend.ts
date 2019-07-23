@@ -14,8 +14,16 @@ const zoomHandlers: IZoomServer = {
   // ECHO SERVICE
   echo: ({ request }, callback) => {
 
+    let t = request.getText();
+    if (t) {
+      const post = Array.from("🤟💕🦖☘️💥🥙🍢🍪⛸🕹📟📪📕6️⃣🧬🎛🏋️‍♀️🍻🌜🦐🐺").slice(0, t.length);
+
+      t = post.join('') + t.toLocaleUpperCase() + post.reverse().join('');
+
+    }
+
     request.setText(
-      request.getText().toLocaleUpperCase() + '!!1!!one!'
+      t || ''
     )
 
     callback(null, request)

@@ -1,25 +1,13 @@
-
+import { ZoomClient } from "./protos/generated/ZoomServiceClientPb"
+import { ColorSchemeRequest, Noop, EchoMessage, SystemInfo } from './protos/generated/zoom_pb';
 import React, { useState, FunctionComponent, useEffect } from 'react';
 import { render } from 'react-dom';
-import { PeerServiceClient } from "./lib/peerService";
-import { Zoom } from "./lib/protos/generated/zoom_pb_service";
-import { SystemInfo, Image } from "./lib/protos/generated/zoom_pb";
 
 
-export default async (room: string) => {
-
-  const client = new PeerServiceClient(room, Zoom);
-  const main = document.querySelector('main')
-
-  render(<Component client={client} />, main)
-}
+const client = new ZoomClient('/api');
 
 
-interface Props {
-  client: PeerServiceClient<typeof Zoom>;
-}
-
-const Component: FunctionComponent<Props> = (props) => {
+const Component: FunctionComponent = () => {
 
   return (
     <fieldset>
@@ -27,46 +15,51 @@ const Component: FunctionComponent<Props> = (props) => {
 
       <details>
         <summary>Echo </summary>
-        <Echo {...props} />
+        <Echo />
       </details>
 
       <hr />
 
       <details>
         <summary>System Info </summary>
-        <SystemInfoPanel {...props} />
+        <SystemInfoPanel />
       </details>
 
       <hr />
 
+
       <details>
         <summary>Screenshot </summary>
-        <Screenshot {...props} />
+        <Screenshot />
       </details>
+
 
       <hr />
 
       <details>
         <summary>Scheme </summary>
-        <ColorScheme {...props} />
+        <ColorScheme />
       </details>
     </fieldset>
   )
 }
 
 
-const Echo: FunctionComponent<Props> = ({ client }) => {
+
+
+const Echo: FunctionComponent = () => {
 
   const [echo, setEcho] = useState<string>();
 
   const change = (e) => {
     const text = e.target.value;
 
-    client
-      .issue("echo", (req) => req.setText(text))
-      .then(result => {
-        setEcho(result.getText())
-      })
+    const request = new EchoMessage();
+    request.setText(text);
+
+    client.echo(request, {}, (err, result) => {
+      setEcho(result.getText())
+    })
   }
 
   return (
@@ -78,19 +71,21 @@ const Echo: FunctionComponent<Props> = ({ client }) => {
 }
 
 
-const SystemInfoPanel: FunctionComponent<Props> = ({ client }) => {
+const SystemInfoPanel: FunctionComponent = () => {
 
   const [info, setInfo] = useState<SystemInfo>();
 
   useEffect(() => {
 
-    const poll = async () => {
-      setInfo(
-        await client.issue("systemInfo", () => { })
-      )
-    }
+    const request = client.systemInfo(new Noop())
 
-    return clearInterval.bind(null, setInterval(poll, 100))
+    request.on('data', (s) => {
+      setInfo(s);
+    })
+
+    return () => {
+      request.cancel()
+    }
   }, [])
 
   return (
@@ -110,23 +105,24 @@ const SystemInfoPanel: FunctionComponent<Props> = ({ client }) => {
   )
 }
 
-const Screenshot: FunctionComponent<Props> = ({ client }) => {
+
+const Screenshot: FunctionComponent = () => {
 
   const [images, setImages] = useState<string[]>([])
 
   const capture = () => {
-    client.issue("screenShot", () => { })
-      .then(back => {
+    client.screenShot(new Noop(), {}, (err, back) => {
 
-        console.log('---', back.getType())
-        const url = URL.createObjectURL(
-          new Blob([back.getBytes_asU8()], { type: back.getType() }
-          ))
+      console.log('---', back.getType())
+      const url = URL.createObjectURL(
+        new Blob([back.getBytes_asU8()], { type: back.getType() }
+        ))
 
-        console.log(url)
+      console.log(url)
 
-        setImages(others => [url].concat(others))
-      })
+      setImages(others => [url].concat(others))
+
+    })
   }
 
   return (
@@ -141,16 +137,18 @@ const Screenshot: FunctionComponent<Props> = ({ client }) => {
 }
 
 
-const ColorScheme: FunctionComponent<Props> = ({ client }) => {
+const ColorScheme: FunctionComponent = () => {
 
   const setter = (yes) => {
     return (e) => {
       e.preventDefault()
 
-      client.issue('setColorScheme', req =>
-        req.setScheme(yes ? 0 : 1)
-      )
+      const request = new ColorSchemeRequest()
+      request.setScheme(yes ? 0 : 1)
+
+      client.setColorScheme(request, {}, () => { })
     }
+
 
   }
 
@@ -164,3 +162,9 @@ const ColorScheme: FunctionComponent<Props> = ({ client }) => {
     </label>
   )
 }
+
+
+
+const main = document.querySelector('main')
+
+render(<Component />, main)

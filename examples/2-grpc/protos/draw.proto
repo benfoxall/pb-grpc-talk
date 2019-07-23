@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+message DrawRequest {
+    repeated float coords = 1;
+    duration float = 2;
+}
+
+message ColorRequest {
+    string color = 1;
+};
+
+service Draw {
+    rpc draw(DrawRequest) returns (Noop);
+    
+    rpc setColor (ColorRequest) returns (Noop);
+}

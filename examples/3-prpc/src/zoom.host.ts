@@ -69,7 +69,7 @@ export default (room: string) => {
 
     setColorScheme: (req) => {
 
-      if (req.getScheme() === 1) {
+      if (req.getScheme() === 0) {
         document.body.style.background = '#333'
         document.body.style.color = '#ccc'
       } else {

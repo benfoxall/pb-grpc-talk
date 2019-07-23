@@ -9,13 +9,11 @@ export class Example extends jspb.Message {
     getName(): string;
     setName(value: string): void;
 
-    getChecked(): boolean;
-    setChecked(value: boolean): void;
+    getBurger(): boolean;
+    setBurger(value: boolean): void;
 
-    getFile(): Uint8Array | string;
-    getFile_asU8(): Uint8Array;
-    getFile_asB64(): string;
-    setFile(value: Uint8Array | string): void;
+    getHowmuch(): number;
+    setHowmuch(value: number): void;
 
 
     serializeBinary(): Uint8Array;
@@ -31,7 +29,7 @@ export class Example extends jspb.Message {
 export namespace Example {
     export type AsObject = {
         name: string,
-        checked: boolean,
-        file: Uint8Array | string,
+        burger: boolean,
+        howmuch: number,
     }
 }

@@ -2,6 +2,6 @@ syntax = "proto3";
 
 message Example {
     string name = 1;
-    bool checked = 2;
-    bytes file = 3;
+    bool burger = 2;
+    float howMuch = 3;
 }

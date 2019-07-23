@@ -64,8 +64,8 @@ proto.Example.prototype.toObject = function(opt_includeInstance) {
 proto.Example.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    checked: jspb.Message.getFieldWithDefault(msg, 2, false),
-    file: msg.getFile_asB64()
+    burger: jspb.Message.getFieldWithDefault(msg, 2, false),
+    howmuch: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
   };
 
   if (includeInstance) {
@@ -108,11 +108,11 @@ proto.Example.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {boolean} */ (reader.readBool());
-      msg.setChecked(value);
+      msg.setBurger(value);
       break;
     case 3:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setFile(value);
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setHowmuch(value);
       break;
     default:
       reader.skipField();
@@ -150,16 +150,16 @@ proto.Example.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getChecked();
+  f = message.getBurger();
   if (f) {
     writer.writeBool(
       2,
       f
     );
   }
-  f = message.getFile_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
+  f = message.getHowmuch();
+  if (f !== 0.0) {
+    writer.writeFloat(
       3,
       f
     );
@@ -183,58 +183,34 @@ proto.Example.prototype.setName = function(value) {
 
 
 /**
- * optional bool checked = 2;
+ * optional bool burger = 2;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
-proto.Example.prototype.getChecked = function() {
+proto.Example.prototype.getBurger = function() {
   return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
 };
 
 
 /** @param {boolean} value */
-proto.Example.prototype.setChecked = function(value) {
+proto.Example.prototype.setBurger = function(value) {
   jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
 /**
- * optional bytes file = 3;
- * @return {!(string|Uint8Array)}
+ * optional float howMuch = 3;
+ * @return {number}
  */
-proto.Example.prototype.getFile = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.Example.prototype.getHowmuch = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
 };
 
 
-/**
- * optional bytes file = 3;
- * This is a type-conversion wrapper around `getFile()`
- * @return {string}
- */
-proto.Example.prototype.getFile_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getFile()));
-};
-
-
-/**
- * optional bytes file = 3;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getFile()`
- * @return {!Uint8Array}
- */
-proto.Example.prototype.getFile_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getFile()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
-proto.Example.prototype.setFile = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
+/** @param {number} value */
+proto.Example.prototype.setHowmuch = function(value) {
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 

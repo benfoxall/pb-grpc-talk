@@ -23,7 +23,7 @@ goog.exportSymbol('proto.Example', null, global);
  * @constructor
  */
 proto.Example = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.Example.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.Example, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -33,13 +33,6 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.Example.displayName = 'proto.Example';
 }
-
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.Example.repeatedFields_ = [3];
 
 
 
@@ -72,7 +65,7 @@ proto.Example.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     checked: jspb.Message.getFieldWithDefault(msg, 2, false),
-    valuesList: jspb.Message.getRepeatedField(msg, 3)
+    file: msg.getFile_asB64()
   };
 
   if (includeInstance) {
@@ -118,8 +111,8 @@ proto.Example.deserializeBinaryFromReader = function(msg, reader) {
       msg.setChecked(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.addValues(value);
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setFile(value);
       break;
     default:
       reader.skipField();
@@ -164,9 +157,9 @@ proto.Example.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getValuesList();
+  f = message.getFile_asU8();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writeBytes(
       3,
       f
     );
@@ -207,34 +200,41 @@ proto.Example.prototype.setChecked = function(value) {
 
 
 /**
- * repeated string values = 3;
- * @return {!Array<string>}
+ * optional bytes file = 3;
+ * @return {!(string|Uint8Array)}
  */
-proto.Example.prototype.getValuesList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
-};
-
-
-/** @param {!Array<string>} value */
-proto.Example.prototype.setValuesList = function(value) {
-  jspb.Message.setField(this, 3, value || []);
+proto.Example.prototype.getFile = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /**
- * @param {string} value
- * @param {number=} opt_index
+ * optional bytes file = 3;
+ * This is a type-conversion wrapper around `getFile()`
+ * @return {string}
  */
-proto.Example.prototype.addValues = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+proto.Example.prototype.getFile_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getFile()));
 };
 
 
 /**
- * Clears the list making it empty but non-null.
+ * optional bytes file = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getFile()`
+ * @return {!Uint8Array}
  */
-proto.Example.prototype.clearValuesList = function() {
-  this.setValuesList([]);
+proto.Example.prototype.getFile_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getFile()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.Example.prototype.setFile = function(value) {
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 

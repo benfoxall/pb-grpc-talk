@@ -28,17 +28,15 @@
 
 ---
 
-# 2017
+![](sketch/2017.png)
 
-# 🎨 Random stuff
-# 💸 Investment banking
+---
 
-# 2018
+![](sketch/2018.png)
 
-# 🤖 Robot cars
-# 🇳🇿New Zealand
+---
 
-[replace with calendar]
+![](sketch/2019.png)
 
 ---
 

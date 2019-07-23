@@ -30,6 +30,51 @@
 
 ![](sketch/2017.png)
 
+^ Freelance stuff - art gallery
+
+^ Nexmo
+
+---
+
+![](sketch/2018.png)
+
+---
+
+![left](images/ryan.jpg)
+
+# Burger with Ryan
+
+---
+
+![](sketch/2018.png)
+
+---
+
+# New Zealand
+
+![original](images/nz-0.jpg)
+
+---
+
+![](sketch/2018.png)
+
+---
+
+# GPS Hacks
+
+![original](images/nz-1.jpg)
+
+---
+
+# Stuffometer
+
+![left original](images/nz-2.jpg)
+![right original](images/nz-3.jpg)
+
+---
+
+![original](images/nz-4.jpg)
+
 ---
 
 ![](sketch/2018.png)
@@ -40,46 +85,7 @@
 
 ---
 
-![left](images/ryan.jpg)
-
-# Burger with Ryan
-
----
-
-# New Zealand
-
-![](images/nz-00.jpg)
-
----
-
-![](images/nz-0.jpg)
-
----
-
-![](images/nz-1.jpg)
-
----
-
-![left](images/nz-2.jpg)
-![right](images/nz-3.jpg)
-
----
-
-![](images/nz-4.jpg)
-
----
-
-![](images/nz-5.jpg)
-
-
----
-
-![](images/nz-map.png)
-
----
-
-
-![](images/nz-6.jpg)
+![fit](images/nz-6.jpg)
 
 ---
 
@@ -87,26 +93,15 @@
 
 ---
 
-# Australia
+![](sketch/2019.png)
 
 ---
 
-# Vietnam
+# Back to Oxbotica 🎉
 
 ---
 
-# Oxford
-
----
-
-# Oxbotica
-
-^ new project, new office
-
----
-
-[what I'm working on]
-
+![video](~/work-demo.mov)
 
 ---
 
@@ -132,13 +127,14 @@
 ---
 
 # ~~Hello~~
-# Talk Intro
 
 ---
 
 # Protocol Buffers & gRPC
 
-# - Not New or Trendy
+---
+
+# Not New **or** Trendy
 
 ^ https://trends.google.com/trends/explore?date=all&q=protocol%20buffers
 
@@ -147,21 +143,47 @@
 
 ---
 
+# Protocol Buffers
+
+## → Serialising Objects
+
+# gRPC
+
+## → Building APIs
+
+---
+
+# Popular & Prolific
+
+---
+
+# Popular & Prolific
+
+## … but not so much in the web
+
+---
+
+# …because with the web
+
+## Serialising Objects → JSON
+
+## Building an API → REST
+
+---
+
+<!--
 ![](sketch/overview.png)
 
 ---
+
+-->
 
 ![](sketch/overview+rest.png)
 
 ---
 
+
 ![](sketch/overview+target.png)
-
----
-
-# ~~Talk Intro~~
-
-# 
 
 ---
 
@@ -220,7 +242,7 @@
 ```
 
 ---
-<!--
+
 ## Store things better-er
 
 # [fit] 123e4567-e89b-12d3-a456-426655440000
@@ -239,8 +261,6 @@
 ^ TODO - it might be better to to data-uri here
 
 ---
-
--->
 
 ![](sketch/json-2-efficient-storage.png)
 
@@ -273,37 +293,25 @@
 
 ---
 
-# 1. Write a `message.proto` 📝
-# 2. Generate `message_pb.js` 🤖
-# 3. Use `Message` in your code ✨
+# 1. 📝 `message.proto` 
+# 2. 🤖 `message_pb.js` 
+# 3. ✨ `new Message()`
 
 ---
 
 # ⚡️ Demo
 
-[TODO]
-
 ---
 
 # The Good stuff
-## [fit] Efficient*
 
 ---
 
-# The Good stuff
-## [fit] Strongly typed
-## [fit] messaging
+# Typed messages across multiple langauges
 
-^ The objects that we've dealt with have been simple, but imagine a huge complex changing object
-
----
-
-# The Good stuff
-## [fit] Strongly typed messaging
-## [fit] between languages
 
 ```bash
-protoc *.proto
+protoc example.proto
   --js-out=… 
   --python-out=…
   --c-out=…
@@ -311,15 +319,23 @@ protoc *.proto
 
 ---
 
-# The Good stuff
-## [fit] Strongly typed messaging
-## [fit] between languages
-## [fit] idiomatically
+# Avoids translation
 
----
+```sql
+SELECT * FROM todoList WHERE …
+```
 
-# The Good stuff
-## [fit] Avoids Translation
+1. TodoItem model class
+
+2. Rest API Layer
+
+3. fetch(…).then(r => r.json())
+
+4. TodoItem.fromJSON()
+
+5. <Item title={item.title}>
+
+[.build-lists: true]
 
 ---
 
@@ -368,16 +384,32 @@ WHY IS IT GOOD TO BE USING THIS IN THE BROWSER
 ---
 
 # [fit] gRPC
+
 # and REST
 
 [.background-color: #ffcc00]
 
 ---
+<!--
+# RPC
+
+# a function in your code might transparently run somewhere else
+
+---
+
+-->
+
+# Goals
+
+* REST - Modelling state
+* gRPC - Calling remote functions
+
+---
 
 # Architectural Models
 
-REST - Resource Oriented
-gRPC - Service Oriented
+* REST - Resource Oriented
+* gRPC - Service Oriented
 
 ---
 
@@ -416,11 +448,14 @@ CommentService/LoadComment
 
 # Transport
 
-REST - HTTP1/HTTP1.1/HTTP2/…
-gRPC - HTTP2
+* REST - HTTP1/HTTP1.1/HTTP2/…
+* gRPC - HTTP2
+
+[.build-lists: true]
 
 ---
 
+<!--
 # Why Only HTTP2
 
 ![inline](images/http2.jpg)
@@ -430,6 +465,8 @@ slideshare.net/Enbac29/http2-standard-for-video-streaming
 ^ you wouldn't want a waterfall when calling functions
 
 ---
+
+-->
 
 # [fit] Browser Support 
 
@@ -459,6 +496,10 @@ slideshare.net/Enbac29/http2-standard-for-video-streaming
 1. Use grpc-web-proxy
 2. Use Envoy Proxy
 3. Wait for tomorrow
+
+[.build-lists: true]
+
+---
 
 > In the future, we expect gRPC-Web to be supported in language-specific Web frameworks, such as Python, Java, and Node.
 
@@ -510,11 +551,18 @@ service Zoom {
 
 ---
 
-## Why it's good to bring this to the web
+## The Good Stuff (for the Web)
 
-* Components ↔︎ Microservices
+* Microservices ↔︎ Components[^*]
 * Make IPC a thing – WebAssembly, Workers, etc.
 * Avoid siloing
+
+
+[^*]: https://martinfowler.com/articles/micro-frontends.html
+
+[.build-lists: true]
+
+<!--
 
 ---
 
@@ -553,11 +601,7 @@ https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
 
 ---
 
-# .proto → service → gRPC
-
-# .proto → service → webRTC-RPC
-
----
+[DIAGRAM]
 
 [peer] => [peer]
 

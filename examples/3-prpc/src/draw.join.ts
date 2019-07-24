@@ -130,9 +130,7 @@ export default async (room) => {
     client.issue("Line", (request) => {
       request.setCoordsList(points)
     }).then(r => {
-      setTimeout(() => {
-        wait = false
-      }, r.getTimeout())
+      timeout = r.getTimeout()
     })
   }
 

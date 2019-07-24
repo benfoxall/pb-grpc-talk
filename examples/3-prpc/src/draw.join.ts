@@ -14,6 +14,9 @@ class Canvas {
   private points: number[] = []
   private color: string = '#000'
 
+  private lastX = 0;
+  private lastY = 0;
+
   private dirty = true;
 
   constructor(parent: Element) {
@@ -60,6 +63,17 @@ class Canvas {
 
     const x = ((e.pageX - left) / width) * this.size;
     const y = ((e.pageY - top) / height) * this.size;
+
+    const jump = Math.abs(x - this.lastX) + Math.abs(y - this.lastY);
+
+    if (jump > 250) {
+      console.log("NOPE")
+      this.points = [];
+    }
+
+
+    this.lastX = x;
+    this.lastY = y;
 
     this.points.unshift(x, y);
 

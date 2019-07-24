@@ -90,6 +90,8 @@ export default (room: string) => {
 
   const main = document.querySelector('main')
 
+
+
   const canvas = new Canvas(main);
 
   // const map = new Map<string, HTMLDivElement>()
@@ -110,14 +112,29 @@ export default (room: string) => {
   main.appendChild(range);
 
 
+  const perSecond = document.createElement('div')
+  perSecond.className = 'per-sec'
+  main.appendChild(perSecond)
+
+  let count = 0;
+  setInterval(() => {
+    perSecond.innerText = String(count);
+    count = 0;
+  }, 1000)
+
+
   new PeerServiceServer(room, Draw, {
     Line: (req, res, meta) => {
+      count++;
+
       canvas.handleCoords(meta.peerId, req.getCoordsList())
 
       res.setTimeout(range.valueAsNumber)
     },
 
     Color: (req, res, meta) => {
+      count++;
+
       canvas.setColor(meta.peerId, req.getValue())
     }
   })

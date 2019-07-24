@@ -60,7 +60,7 @@
 
 ---
 
-# GPS Hacks
+# GPS Tracker
 
 ![original](images/nz-1.jpg)
 
@@ -301,6 +301,14 @@
 
 # ⚡️ Demo
 
+```
+message Example {
+    string name = 1;
+    bool burger = 2;
+    float howMuch = 3;
+}
+```
+
 ---
 
 # The Good stuff
@@ -339,50 +347,6 @@ SELECT * FROM todoList WHERE …
 
 ---
 
-# The Good stuff
-## [fit] Transport Agnostic
-
----
-
-# …
-
----
-
-# …Though…
-
----
-
-# …Though…
-# [fit] it's a massive faff
-
----
-
-# …Though…
-# [fit] TS interfaces
-# [fit] will get you far
-
----
-
-# …Though…
-# [fit] JSON is kind
-# [fit] of awesome
-
-```ts
-// JS Object
-const data = [{name: 'item-1', stuff: [5, 3, 2]……}]
-
-// JSON String
-const data = JSON.parse("[{name: 'item-1', stuff: [5, 3, 2]……}]")
-```
-
----
-
-# MISSING
-
-WHY IS IT GOOD TO BE USING THIS IN THE BROWSER
-
----
-
 # [fit] gRPC
 
 # and REST
@@ -404,12 +368,16 @@ WHY IS IT GOOD TO BE USING THIS IN THE BROWSER
 * REST - Modelling state
 * gRPC - Calling remote functions
 
+[.build-lists: true]
+
 ---
 
 # Architectural Models
 
 * REST - Resource Oriented
 * gRPC - Service Oriented
+
+[.build-lists: true]
 
 ---
 
@@ -551,11 +519,13 @@ service Zoom {
 
 ---
 
-## The Good Stuff (for the Web)
+## Why this is so cool
 
+* Updating a service
 * Microservices ↔︎ Components[^*]
-* Make IPC a thing – WebAssembly, Workers, etc.
 * Avoid siloing
+
+<!--* WebAssembly-->
 
 
 [^*]: https://martinfowler.com/articles/micro-frontends.html
@@ -608,6 +578,10 @@ https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
 [peerT] => [peerT]
 
 [peerT<S>] => [peerT<S>]
+
+---
+
+# Peer RPC
 
 ---
 

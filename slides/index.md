@@ -50,9 +50,11 @@
 
 ---
 
-# New Zealand
+# [fit] New Zealand
 
 ![original](images/nz-0.jpg)
+
+[.header: #00ffcc]
 
 ---
 
@@ -60,16 +62,24 @@
 
 ---
 
-# GPS Tracker
+# [fit] GPS Tracker
 
 ![original](images/nz-1.jpg)
 
+[.header: #ff00cc]
+
 ---
 
-# Stuffometer
+# [fit] stuffometer
 
 ![left original](images/nz-2.jpg)
 ![right original](images/nz-3.jpg)
+
+[.header: #00ff00]
+
+^ Subjective data
+
+^ scenery, wildlife, people, pain, 
 
 ---
 

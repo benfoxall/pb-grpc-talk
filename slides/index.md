@@ -1,5 +1,7 @@
 # [fit] Any Questions?
 
+# (or, comments!)
+
 ---
 
 # Hi,
@@ -573,48 +575,85 @@ https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
 
 ---
 
-[BACKEND]
+![](sketch/overview+target.png)
 
 ---
 
-[NO-BACKEND]
-
----
-
-[DIAGRAM]
-
-[peer] => [peer]
-
-[peerT] => [peerT]
-
-[peerT<S>] => [peerT<S>]
+![](sketch/overview-wo-backend.png)
 
 ---
 
 # Peer RPC
+
+---
+
+![](sketch/rpc-1.png)
+
+---
+
+![](sketch/rpc-2.png)
+
+---
+
+![](sketch/rpc-3.png)
+
+---
+
+![](sketch/rpc-4.png)
+
+---
+
+![](sketch/rpc-5.png)
+
+---
+
+![](sketch/rpc-6.png)
+
+---
+
+![](sketch/rpc-7.png)
+
+
+---
+
+```ts
+new PeerServiceServer(Zoom, {
+  echo: (req, res) => {
+    res.setText(
+      req.getText()
+    )
+  },
+  setColorScheme: (req) => {
+    document.body.style.background =
+      req.isDark() ? '#000' : '#fff'
+  },
+})
+```
 
 ---
 
 # Demo
 
-Zoom Service (Web edition)
+* Zoom Service (Web edition)
 
 ---
 
-# Peer RPC
+# The good stuff
 
 ---
 
-# Peer RPC
+# The good stuff
 
-# Supports a different kind of interaction
+## Interaction modes
 
 ---
 
-# Feels good!
+# The good stuff
+
+## Realtime
 
 ```ts
-new PeerServiceServer(roomName, Zoom, {
+new PeerServiceServer(Zoom, {
   echo: (req, res) => {
     res.setText(
       req.getText()

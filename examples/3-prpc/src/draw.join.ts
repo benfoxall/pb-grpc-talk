@@ -3,10 +3,18 @@ import { PeerServiceClient } from "./lib/peerService";
 import { Draw } from "./lib/protos/generated/draw_pb_service";
 
 class Canvas {
+
+  public listener = (points: number[]) => { };
+
   private element: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private dims: ClientRect;
   private readonly size = 700;
+
+  private points: number[] = []
+  private color: string = '#000'
+
+  private dirty = true;
 
   constructor(parent: Element) {
 
@@ -15,13 +23,13 @@ class Canvas {
     canvas.width = canvas.height = this.size;
 
     const size = () => {
-      const {innerHeight, innerWidth} = window;
+      const { innerHeight, innerWidth } = window;
       const s = Math.min(innerHeight, innerWidth)
-      
+
       const left = (innerWidth - s) / 2
       const top = (innerHeight - s) / 2
 
-      Object.assign(canvas.style, 
+      Object.assign(canvas.style,
         { width: s, height: s, left, top },
         { background: '#fff', position: 'fixed' }
       )
@@ -40,19 +48,50 @@ class Canvas {
 
     this.element = canvas;
     this.ctx = canvas.getContext('2d');
+    this.ctx.lineWidth = 4;
   }
 
   handleEvent(e: PointerEvent) {
-    console.log(e)
     e.preventDefault()
 
-    const {left, width, top, height} = this.dims;
+    const { left, width, top, height } = this.dims;
 
     const x = ((e.pageX - left) / width) * this.size;
     const y = ((e.pageY - top) / height) * this.size;
 
-    this.ctx.fillRect(x - 5, y - 5, 10, 10);
+    this.points.unshift(x, y);
+
+    while (this.points.length > 20) {
+      this.points.pop();
+    }
+
+    // HERE
+
+    this.listener(this.points);
+
+    this.dirty = true;
   }
+
+  setColor(color: string) {
+    this.color = color;
+    this.dirty = true;
+  }
+
+  render() {
+    if (!this.dirty) return;
+    this.dirty = false;
+
+    this.ctx.clearRect(0, 0, this.size, this.size);
+
+    this.ctx.strokeStyle = this.color;
+
+    this.ctx.beginPath()
+    for (let i = 0; i < this.points.length; i += 2) {
+      this.ctx.lineTo(this.points[i], this.points[i + 1]);
+    }
+    this.ctx.stroke()
+  }
+
 
 }
 
@@ -62,12 +101,46 @@ export default async (room) => {
 
   const canvas = new Canvas(main)
 
+
+  const input = document.createElement('input');
+  input.type = 'color'
+  input.addEventListener('change', () => {
+    canvas.setColor(input.value)
+
+    client.issue("Color", (req) => {
+      req.setValue(input.value);
+    })
+  })
+  main.appendChild(input);
+
   const client = new PeerServiceClient(room, Draw);
 
-  // canvas.addEventListener('mousemove', (e) => {
-  //   client.issue("Line", (request) => {
-  //     request.setCoordsList([e.clientX, e.clientY])
-  //   })
-  // });
+  let timeout = 0;
+  let wait = false;
+  canvas.listener = (points) => {
+    // timeout stuff
+    if (wait) return;
+    wait = true;
+
+    setTimeout(() => {
+      wait = false
+    }, timeout)
+
+    // also requires a response (veru conservative)
+    client.issue("Line", (request) => {
+      request.setCoordsList(points)
+    }).then(r => {
+      setTimeout(() => {
+        wait = false
+      }, r.getTimeout())
+    })
+  }
+
+  const loop = () => {
+    requestAnimationFrame(loop)
+    canvas.render();
+  }
+
+  loop()
 
 }

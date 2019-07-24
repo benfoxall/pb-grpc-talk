@@ -11,7 +11,7 @@ message Throttle {
 }
 
 message ColorRequest {
-  string answer = 1;
+  string value = 1;
 }
 
 service Draw {

@@ -62,8 +62,8 @@ export namespace Throttle {
 }
 
 export class ColorRequest extends jspb.Message {
-  getAnswer(): string;
-  setAnswer(value: string): void;
+  getValue(): string;
+  setValue(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ColorRequest.AsObject;
@@ -77,7 +77,7 @@ export class ColorRequest extends jspb.Message {
 
 export namespace ColorRequest {
   export type AsObject = {
-    answer: string,
+    value: string,
   }
 }
 

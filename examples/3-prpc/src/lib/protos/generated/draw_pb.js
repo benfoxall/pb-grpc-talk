@@ -502,7 +502,7 @@ proto.ColorRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.ColorRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    answer: jspb.Message.getFieldWithDefault(msg, 1, "")
+    value: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -541,7 +541,7 @@ proto.ColorRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAnswer(value);
+      msg.setValue(value);
       break;
     default:
       reader.skipField();
@@ -572,7 +572,7 @@ proto.ColorRequest.prototype.serializeBinary = function() {
  */
 proto.ColorRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAnswer();
+  f = message.getValue();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -583,16 +583,16 @@ proto.ColorRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string answer = 1;
+ * optional string value = 1;
  * @return {string}
  */
-proto.ColorRequest.prototype.getAnswer = function() {
+proto.ColorRequest.prototype.getValue = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.ColorRequest.prototype.setAnswer = function(value) {
+proto.ColorRequest.prototype.setValue = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 

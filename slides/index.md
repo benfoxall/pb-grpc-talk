@@ -7,7 +7,7 @@
 
 # (It's nice to be back)
 
-^ I helped start this Meetup,  which gives me a really unique perspecive giving a talk here.  And from that perspective, one thing I feel really strongly is…
+^ I helped start this Meetup,  which gives me a really unique perspecive giving a talk here.  And from that perspective, one thing that is very clear…
 
 ---
 

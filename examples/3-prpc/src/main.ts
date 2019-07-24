@@ -8,6 +8,8 @@ const params = new URLSearchParams(document.location.search)
 const paths = {
   'dev.host': import('./dev.host'),
   'dev.join': import('./dev.join'),
+  'draw.host': import('./draw.host'),
+  'draw.join': import('./draw.join'),
   'zoom.host': import('./zoom.host'),
   'zoom.join': import('./zoom.join'),
 }

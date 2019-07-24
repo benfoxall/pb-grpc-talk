@@ -31,7 +31,7 @@ class Canvas {
 
       Object.assign(canvas.style,
         { width: s, height: s, left, top },
-        { background: '#fff', position: 'fixed' }
+        { background: 'rgba(255,255,255,0.8)', position: 'fixed' }
       )
 
       this.dims = canvas.getBoundingClientRect()
@@ -46,17 +46,7 @@ class Canvas {
   }
 
   handleCoords(peer: string, coords: number[]) {
-
     this.points.set(peer, coords)
-    console.log("---", this.points)
-
-    // this.points.unshift(x, y);
-
-    // while (this.points.length > 20) {
-    //   this.points.pop();
-    // }
-
-    // // HERE
 
     this.dirty = true;
   }
@@ -76,8 +66,6 @@ class Canvas {
 
       const points = this.points.get(key);
       const color = this.color.get(key) || '#000';
-
-      console.log(points, color);
 
       this.ctx.strokeStyle = color
 
@@ -124,18 +112,13 @@ export default (room: string) => {
 
   new PeerServiceServer(room, Draw, {
     Line: (req, res, meta) => {
-      console.log(req.getCoordsList())
-
       canvas.handleCoords(meta.peerId, req.getCoordsList())
 
       res.setTimeout(range.valueAsNumber)
-
     },
 
     Color: (req, res, meta) => {
-
       canvas.setColor(meta.peerId, req.getValue())
-
     }
   })
 

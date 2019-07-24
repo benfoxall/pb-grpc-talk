@@ -31,12 +31,14 @@ class Canvas {
 
       Object.assign(canvas.style,
         { width: s, height: s, left, top },
-        { background: '#fff', position: 'fixed' }
+        { background: 'rgba(255,255,255,0.8)', position: 'fixed' }
       )
 
       this.dims = canvas.getBoundingClientRect()
     }
     size()
+    setTimeout(size, 50)// not too sure why we need this!
+
     window.addEventListener("resize", size)
 
 
@@ -104,6 +106,9 @@ export default async (room) => {
 
   const input = document.createElement('input');
   input.type = 'color'
+  input.style.width = '40vmin'
+  input.style.height = '20vmin'
+
   input.addEventListener('change', () => {
     canvas.setColor(input.value)
 
@@ -115,7 +120,7 @@ export default async (room) => {
 
   const client = new PeerServiceClient(room, Draw);
 
-  let timeout = 0;
+  let timeout = 500;
   let wait = false;
   canvas.listener = (points) => {
     // timeout stuff
@@ -132,6 +137,9 @@ export default async (room) => {
     }).then(r => {
       timeout = r.getTimeout()
     })
+      .catch(e => {
+        console.log("Didn't send line")
+      })
   }
 
   const loop = () => {

@@ -57,8 +57,8 @@ const nav = (params: URLSearchParams) => html`
       html`
         <nav>
           ${hostLink('zoom', 'Zoom Service')}
-          ${hostLink('dev', 'Cursor test')}
-          ${hostLink('draw', 'Draw (unimplemented)')}
+          ${hostLink('dev', 'Cursors')}
+          ${hostLink('draw', 'Draw')}
         </nav>
       `
   }  

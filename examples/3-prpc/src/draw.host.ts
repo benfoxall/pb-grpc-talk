@@ -31,7 +31,7 @@ class Canvas {
 
       Object.assign(canvas.style,
         { width: s, height: s, left, top },
-        { background: 'rgba(255,255,255,0.8)', position: 'fixed' }
+        { background: 'rgba(255,255,255,0.1)', position: 'fixed' }
       )
 
       this.dims = canvas.getBoundingClientRect()

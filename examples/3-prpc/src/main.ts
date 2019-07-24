@@ -14,38 +14,38 @@ const paths = {
 
 const app = params.get('a');
 
-if(app) {
+if (app) {
 
-  const action =  
-    params.has("join") ? 'join' : 
-    params.has("host") ? 'host' : '';
+  const action =
+    params.has("join") ? 'join' :
+      params.has("host") ? 'host' : '';
 
   const room = params.get(action);
 
   const path = paths[app + '.' + action];
 
-  if(path) {
-    path.then(imp => { imp.default(room)})
+  if (path) {
+    path.then(imp => { imp.default(room) })
   }
 
-  if(action === 'join') {
+  if (action === 'join') {
     document.querySelector('h1').style.display = 'none'
   }
 }
 
 
 const joinURL = document.location.href.replace('host=', 'join=')
-const hostLink = (name: string) => html`
+const hostLink = (name: string, title: string) => html`
   <a href="?a=${name}&host=${Math.random().toString(32).split('.')[1]}">
-    ${name}
+    ${title}
   </a>
 `
 
 const nav = (params: URLSearchParams) => html`
   ${
-    params.has('join') ? 
-      html`<h2 id="appName">${params.get('a')}</h2>` :
-    params.has('a') ? 
+  params.has('join') ?
+    html`<h2 id="appName">${params.get('a')}</h2>` :
+    params.has('a') ?
       html`
         <h2 id="appName">${params.get('a')}</h2>
         <footer>
@@ -54,9 +54,9 @@ const nav = (params: URLSearchParams) => html`
       ` :
       html`
         <nav>
-          ${hostLink('dev')}
-          ${hostLink('zoom')}
-          ${hostLink('draw')}
+          ${hostLink('zoom', 'Zoom Service')}
+          ${hostLink('dev', 'Cursor test')}
+          ${hostLink('draw', 'Draw (unimplemented)')}
         </nav>
       `
   }  

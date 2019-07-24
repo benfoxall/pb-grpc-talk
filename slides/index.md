@@ -616,3 +616,61 @@ https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
 Zoom Service (Web edition)
 
 ---
+
+# Peer RPC
+
+---
+
+# Peer RPC
+
+# Supports a different kind of interaction
+
+---
+
+# Feels good!
+
+```ts
+new PeerServiceServer(roomName, Zoom, {
+  echo: (req, res) => {
+    res.setText(
+      req.getText()
+    )
+  },
+  setColorScheme: (req) => {
+    document.body.style.background =
+      req.isDark() ? '#000' : '#fff'
+  }
+})
+```
+
+---
+
+# Building interfaces
+
+```
+service Controller {
+  rpc joystick(repeated Move) returns (Noop);
+  rpc press(Button) returns (Noop); 
+}
+```
+
+---
+
+# Summary
+
+* Protocol Buffers
+* gRPC
+* pRPC
+
+---
+
+# Chat
+
+---
+
+# Thanks
+
+@benjaminbenben
+
+(Seren and Marcus – you're awesome)
+

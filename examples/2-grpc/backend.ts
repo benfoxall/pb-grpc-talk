@@ -65,7 +65,7 @@ const zoomHandlers: IZoomServer = {
 
 var server = new Server();
 server.addService(ZoomService, zoomHandlers);
-server.bind('0.0.0.0:9090', ServerCredentials.createInsecure());
+server.bind('0.0.0.0:9990', ServerCredentials.createInsecure());
 server.start();
 
 
@@ -93,7 +93,8 @@ setInterval(() => {
 import { spawn } from 'child_process';
 
 const proxy = spawn('grpcwebproxy', [
-  '--backend_addr=localhost:9090',
+  '--backend_addr=localhost:9990',
+  '--server_http_debug_port=9991',
   '--run_tls_server=false',
   '--server_http_max_write_timeout=1h',
   '--allow_all_origins',

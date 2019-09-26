@@ -11,7 +11,7 @@ const app = express()
 app.use(
   '/api',
   proxy({
-    target: 'http://localhost:8080',
+    target: 'http://localhost:9991',
     pathRewrite: { '^/api/': '/' },
   })
 )

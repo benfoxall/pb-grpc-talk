@@ -1,7 +1,8 @@
 syntax = "proto3";
 
-message Example {
-    string name = 1;
-    bool burger = 2;
-    float howMuch = 3;
+message Horse {
+  string name = 1;
+  bool likesCarrots = 2;
+  float height = 3;
+  bytes avatar = 4;
 }

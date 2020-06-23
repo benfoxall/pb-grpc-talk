@@ -5,31 +5,37 @@
 
 import * as jspb from "google-protobuf";
 
-export class Example extends jspb.Message { 
+export class Horse extends jspb.Message { 
     getName(): string;
     setName(value: string): void;
 
-    getBurger(): boolean;
-    setBurger(value: boolean): void;
+    getLikescarrots(): boolean;
+    setLikescarrots(value: boolean): void;
 
-    getHowmuch(): number;
-    setHowmuch(value: number): void;
+    getHeight(): number;
+    setHeight(value: number): void;
+
+    getAvatar(): Uint8Array | string;
+    getAvatar_asU8(): Uint8Array;
+    getAvatar_asB64(): string;
+    setAvatar(value: Uint8Array | string): void;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Example.AsObject;
-    static toObject(includeInstance: boolean, msg: Example): Example.AsObject;
+    toObject(includeInstance?: boolean): Horse.AsObject;
+    static toObject(includeInstance: boolean, msg: Horse): Horse.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Example, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Example;
-    static deserializeBinaryFromReader(message: Example, reader: jspb.BinaryReader): Example;
+    static serializeBinaryToWriter(message: Horse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Horse;
+    static deserializeBinaryFromReader(message: Horse, reader: jspb.BinaryReader): Horse;
 }
 
-export namespace Example {
+export namespace Horse {
     export type AsObject = {
         name: string,
-        burger: boolean,
-        howmuch: number,
+        likescarrots: boolean,
+        height: number,
+        avatar: Uint8Array | string,
     }
 }

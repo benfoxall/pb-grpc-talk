@@ -19,7 +19,7 @@
     "signalhub": "^4.9.0",
     "simple-peer": "^9.4.0",
     "src": "^1.1.2",
-    "systeminformation": "^4.14.4",
+    "systeminformation": "^5.3.1",
     "typescript": "^3.5.3",
     "upsidedown": "0.0.5"
   },

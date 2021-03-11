@@ -6,49 +6,42 @@ import React, {
 } from "react";
 import { render } from "react-dom";
 
-import { Horse } from "./protos/example_pb";
+import { Weather } from "./protos/example_pb";
 
-const example = new Horse();
+const example = new Weather();
 
 const Generate = () => {
   const [name, setName] = useState("");
-  const [carrots, setCarrots] = useState();
-  const [height, setHeight] = useState(15);
-  const [avatar, setAvatar] = useState<string>();
-  const [b64, setb64] = useState("");
-
-  useEffect(() => {
-    example.setName(name);
-    example.setLikescarrots(carrots);
-    example.setHeight(height);
-    example.setAvatar(new TextEncoder().encode(avatar));
-
-    const reader = new FileReader();
-    reader.onload = function () {
-      setb64((reader.result as string).split(";base64,")[1]);
-    };
-    reader.readAsDataURL(
-      new Blob([example.serializeBinary()], {
-        type: "application/protobuf",
-      })
-    );
-  }, [name, carrots, height, avatar]);
-
   const handleName = (e) => {
     setName(e.target.value);
   };
 
-  const handleCheckbox = (e) => {
-    setCarrots(e.target.checked);
+  const [cloudy, setCloudy] = useState<boolean>();
+  const handleCloudy = (e) => {
+    setCloudy(e.target.checked);
   };
 
-  const handleSlide = (e: ChangeEvent<HTMLInputElement>) => {
-    setHeight(e.target.valueAsNumber);
+  const [temperature, setTemperature] = useState<number>();
+  const handleTemperature = (e) => {
+    setTemperature(e.target.valueAsNumber);
   };
 
+  const [windspeed, setWindspeed] = useState<number>();
+  const handleWindspeed = (e) => {
+    setWindspeed(e.target.valueAsNumber);
+  };
+
+  const [windDirection, setWindDirection] = useState<number>();
+  const handleWindDirection = (e) => {
+    setWindDirection(e.target.valueAsNumber);
+  };
+
+  const [avatar, setAvatar] = useState<string>();
   // LOL, it's a string, but you get the idea
   const handleFile: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.currentTarget.files[0];
+
+    debugger;
     if (file) {
       const reader = new FileReader();
       reader.onload = function () {
@@ -59,28 +52,85 @@ const Generate = () => {
     }
   };
 
+  const [b64, setb64] = useState("");
+
+  useEffect(() => {
+    example.setPlacename(name);
+    example.setCloudy(cloudy);
+    example.setTemprature(temperature);
+    example.setWindSpeed(windspeed);
+    example.setWindDirection(windDirection);
+    example.setPhoto(new TextEncoder().encode(avatar));
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      setb64((reader.result as string).split(";base64,")[1]);
+    };
+    reader.readAsDataURL(
+      new Blob([example.serializeBinary()], {
+        type: "application/protobuf",
+      })
+    );
+  }, [name, cloudy, temperature, windspeed, windDirection, avatar]);
+
   return (
     <section>
       <label>
-        Name <input type="text" onChange={handleName} autoComplete="none" />
+        Placename
+        <input type="text" onChange={handleName} autoComplete="none" />
       </label>
       <label>
-        Carrots? <input type="checkbox" onChange={handleCheckbox} />
-      </label>
-      <label>
-        Hands{" "}
-        <input
-          type="range"
-          onChange={handleSlide}
-          value={height}
-          min="10"
-          max="20"
-          step="0.1"
-        />{" "}
-        {height}
+        Cloudy? <input type="checkbox" onChange={handleCloudy} />
       </label>
 
-      <input type="file" onChange={handleFile} accept="image/svg" />
+      <label>
+        Temperature
+        <input
+          type="range"
+          onChange={handleTemperature}
+          value={temperature}
+          min="-10"
+          max="40"
+          step="0.1"
+        />{" "}
+        {temperature}
+      </label>
+
+      <label>
+        Wind Speed
+        <input
+          type="range"
+          onChange={handleWindspeed}
+          value={windspeed}
+          min="0"
+          max="100"
+          step="0.1"
+        />{" "}
+        {windspeed}
+      </label>
+
+      <label>
+        Wind Direction
+        <input
+          type="range"
+          onChange={handleWindDirection}
+          value={windDirection}
+          min="0"
+          max="100"
+          step="0.1"
+        />{" "}
+        {windDirection}
+      </label>
+
+      <label>
+        Photo
+        <input
+          type="file"
+          onChange={handleFile}
+          accept="image/*"
+          capture="camera"
+        />
+      </label>
 
       <textarea className="b64" value={b64}></textarea>
     </section>
@@ -88,13 +138,13 @@ const Generate = () => {
 };
 
 const Consume = () => {
-  const [object, setObject] = useState<Horse>();
+  const [object, setObject] = useState<Weather>();
 
   const update = (e) => {
     // there's probably a better way
     fetch("data:application/protobuf;base64," + e.target.value)
       .then((res) => res.arrayBuffer())
-      .then((buffer) => Horse.deserializeBinary(new Uint8Array(buffer)))
+      .then((buffer) => Weather.deserializeBinary(new Uint8Array(buffer)))
       .then(setObject)
       .catch(() => {
         setObject(undefined);
@@ -109,18 +159,28 @@ const Consume = () => {
 
       {object && (
         <>
-          <h1>🐴HORSE!</h1>
+          <h1>WEATHER!!!</h1>
 
-          <h2>Name: {object.getName()}</h2>
+          <h2>
+            💨 {Math.round(object.getWindSpeed())}{" "}
+            <div
+              style={{
+                transform: `rotate(${object.getWindDirection()}deg)`,
+                display: "inline-block",
+              }}
+            >
+              🔝
+            </div>
+          </h2>
 
-          <h2>Carrots? {object.getLikescarrots() ? "🥰🥕" : "🍏"}</h2>
-
-          <h3>Height:{object.getHeight()}</h3>
+          <h2>Where?: {object.getPlacename()}</h2>
+          <h2>Cloudy?: {object.getCloudy() ? "☁️" : "🌞"}</h2>
+          <h2>🌡? {object.getTemprature().toFixed(2)}!!</h2>
 
           <p>
-            {object.getAvatar() && (
+            {object.getPhoto() && (
               <img
-                src={new TextDecoder().decode(object.getAvatar_asU8())}
+                src={new TextDecoder().decode(object.getPhoto_asU8())}
                 style={{ maxHeight: "5em", maxWidth: "5em" }}
               />
             )}

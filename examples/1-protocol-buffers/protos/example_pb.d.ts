@@ -5,37 +5,45 @@
 
 import * as jspb from "google-protobuf";
 
-export class Horse extends jspb.Message { 
-    getName(): string;
-    setName(value: string): void;
+export class Weather extends jspb.Message { 
+    getPlacename(): string;
+    setPlacename(value: string): void;
 
-    getLikescarrots(): boolean;
-    setLikescarrots(value: boolean): void;
+    getCloudy(): boolean;
+    setCloudy(value: boolean): void;
 
-    getHeight(): number;
-    setHeight(value: number): void;
+    getTemprature(): number;
+    setTemprature(value: number): void;
 
-    getAvatar(): Uint8Array | string;
-    getAvatar_asU8(): Uint8Array;
-    getAvatar_asB64(): string;
-    setAvatar(value: Uint8Array | string): void;
+    getWindSpeed(): number;
+    setWindSpeed(value: number): void;
+
+    getWindDirection(): number;
+    setWindDirection(value: number): void;
+
+    getPhoto(): Uint8Array | string;
+    getPhoto_asU8(): Uint8Array;
+    getPhoto_asB64(): string;
+    setPhoto(value: Uint8Array | string): void;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Horse.AsObject;
-    static toObject(includeInstance: boolean, msg: Horse): Horse.AsObject;
+    toObject(includeInstance?: boolean): Weather.AsObject;
+    static toObject(includeInstance: boolean, msg: Weather): Weather.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Horse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Horse;
-    static deserializeBinaryFromReader(message: Horse, reader: jspb.BinaryReader): Horse;
+    static serializeBinaryToWriter(message: Weather, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Weather;
+    static deserializeBinaryFromReader(message: Weather, reader: jspb.BinaryReader): Weather;
 }
 
-export namespace Horse {
+export namespace Weather {
     export type AsObject = {
-        name: string,
-        likescarrots: boolean,
-        height: number,
-        avatar: Uint8Array | string,
+        placename: string,
+        cloudy: boolean,
+        temprature: number,
+        windSpeed: number,
+        windDirection: number,
+        photo: Uint8Array | string,
     }
 }

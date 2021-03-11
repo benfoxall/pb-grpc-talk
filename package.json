@@ -48,7 +48,7 @@
     "demo1": "parcel examples/1-protocol-buffers/index.html",
     "demo2": "ts-node examples/2-grpc/app.ts",
     "demo2.backend": "ts-node examples/2-grpc/backend.ts",
-    "demo3": "parcel examples/3-prpc/index.html"
+    "demo3": "signalhub listen -p 8008 & parcel examples/3-prpc/index.html"
   },
   "author": "",
   "license": "MIT"
